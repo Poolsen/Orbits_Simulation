@@ -8,19 +8,27 @@ with open(venv_path) as file_:
     exec(file_.read(), {'__file__': venv_path})
 
 import pygame
-import math as ma   # für ein paar funktionen nuetlich
+import math as ma   # für ein paar funktionen nuetzlich
 
 pygame.init()
 
 breite = 1000   #hoehe des windows
 hoehe = 1000    #breite des windows
+weiss = (255, 255, 255)     #eine rgb farbe
 
 window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 
 def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
+    clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
+
+
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
+        clock.tick(60)      # der loop läuft mit max. 60 fps
+        #window.fill(weiss)  # hintergrundfarbe des windows
+        #pygame.display.update()     #updated, was angezeigt wird
+
         for event in pygame.event.get():    #alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
             if event.type == pygame.QUIT:   #wenn auf das X gedrückt wird
                 run = False                 # soll das Programm nicht mehr laufen
