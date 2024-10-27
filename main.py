@@ -15,6 +15,7 @@ pygame.init()
 breite = 1000   #hoehe des windows
 hoehe = 1000    #breite des windows
 weiss = (255, 255, 255)     #eine rgb farbe
+FPS = 60        #mit wie viel FPS die Animation laufen soll
 
 window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
@@ -25,7 +26,7 @@ def main():
 
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
-        clock.tick(60)      # der loop läuft mit max. 60 fps
+        clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
         #window.fill(weiss)  # hintergrundfarbe des windows
         #pygame.display.update()     #updated, was angezeigt wird
 
