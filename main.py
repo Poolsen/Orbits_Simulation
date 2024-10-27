@@ -29,10 +29,10 @@ def main():
         #window.fill(weiss)  # hintergrundfarbe des windows
         #pygame.display.update()     #updated, was angezeigt wird
 
-        for event in pygame.event.get():    #alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
-            if event.type == pygame.QUIT:   #wenn auf das X gedrückt wird
-                run = False                 # soll das Programm nicht mehr laufen
+        for event in pygame.event.get():    # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
+            if event.type == pygame.QUIT:   # wenn auf das X gedrückt wird
+                run = False                 # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
 
-    pygame.quit()
+    pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
 
-main()
+main()      #ich lasse die main() function laufen / ausführen
