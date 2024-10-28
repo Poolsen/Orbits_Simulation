@@ -8,7 +8,7 @@ with open(venv_path) as file_:
     exec(file_.read(), {'__file__': venv_path})
 
 import pygame
-import math as ma   # für ein paar funktionen nuetzlich
+import math as ma   # für ein paar funktionen nützlich
 
 pygame.init()
 
