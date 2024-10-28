@@ -1,5 +1,4 @@
 # installed packages: pygame
-from tkinter import Scale
 
 # Path to your virtual environment
 venv_path = r"venv\Scripts\activate_this.py" #das ist der Pfad, um zu activate_this.py zu kommen und es dann auszuführen, was dann das venv startet → packages verfügbar
@@ -15,12 +14,16 @@ pygame.init()
 
 breite = 800   #hoehe des windows
 hoehe = 800    #breite des windows
+
+window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
+pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
+
 weiss = (255, 255, 255)     #eine rgb farbe
 gelb = (255, 255, 0)        #eine rgb farbe
 FPS = 60        #mit wie viel FPS die Animation laufen soll
 
 class Sattelit:
-    AE = 149600000 * 1000   #149, 6 mio km, aber in metern also * 1000
+    AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
     Scale = 250 / AE        # 1 Astronomische Einheit entspricht ca. 100 pixeln
     TimeStep = 3600 * 24    # 1 Tag, der Sattelit updated sich also 1 mal pro Tag
@@ -34,20 +37,27 @@ class Sattelit:
 
         self.orbit = []
         self.planet = False
-        self.abstand_zu_Sonne = 0
+        self.abstand_zu_Planet = 0
 
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
 
-    def draw(self, Window):
-        x = self.x  * self.Scale + breite / 2
+    def draw(self, window):
+        x = self.x * self.Scale + breite / 2
         y = self.y * self.Scale + hoehe / 2
-        pygame.draw.circle(Window, self.farbe, (x, y), self.radius)
 
 
+        if len(self.orbit) > 2:
+            neue_punkte = []
+            for point in self.orbit:
+                x, y = point
+                x = x * self.Scale + breite / 2
+                y = y * self.Scale + hoehe / 2
+                neue_punkte.append((x, y))
+            pygame.draw.lines(window, self.farbe, False, neue_punkte, 2)
 
-window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
-pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
+        pygame.draw.circle(window, self.farbe, (x, y), self.radius, )
+
 
 def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
