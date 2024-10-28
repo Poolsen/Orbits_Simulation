@@ -63,7 +63,7 @@ def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
-    planet = Sattelit(0, 0, 30, gelb, 1.98892 * 10 ** 30 )
+    planet = Sattelit(0, 0, 30, gelb, 1.98892 * 10 ** 30 )      #! hier noch mit Sonnen - Variablen
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
