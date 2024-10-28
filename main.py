@@ -1,4 +1,5 @@
 # installed packages: pygame
+from tkinter import Scale
 
 # Path to your virtual environment
 venv_path = r"venv\Scripts\activate_this.py" #das ist der Pfad, um zu activate_this.py zu kommen und es dann auszuführen, was dann das venv startet → packages verfügbar
@@ -12,10 +13,38 @@ import math as ma   # für ein paar funktionen nützlich
 
 pygame.init()
 
-breite = 1000   #hoehe des windows
-hoehe = 1000    #breite des windows
+breite = 800   #hoehe des windows
+hoehe = 800    #breite des windows
 weiss = (255, 255, 255)     #eine rgb farbe
+gelb = (255, 255, 0)        #eine rgb farbe
 FPS = 60        #mit wie viel FPS die Animation laufen soll
+
+class Sattelit:
+    AE = 149600000 * 1000   #149, 6 mio km, aber in metern also * 1000
+    G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
+    Scale = 250 / AE        # 1 Astronomische Einheit entspricht ca. 100 pixeln
+    TimeStep = 3600 * 24    # 1 Tag, der Sattelit updated sich also 1 mal pro Tag
+
+    def __init__(self, x, y, radius, masse, farbe):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.masse = masse      # in kg
+        self.farbe = farbe
+
+        self.orbit = []
+        self.planet = False
+        self.abstand_zu_Sonne = 0
+
+        self.x_v = 0    #geschwindigkeit (in x - Richtung)
+        self.y_v = 0    #geschwindigkeit (in y - Richtung)
+
+    def draw(self, Window):
+        x = self.x  * self.Scale + breite / 2
+        y = self.y * self.Scale + hoehe / 2
+        pygame.draw.circle(Window, self.farbe, (x, y), self.radius)
+
+
 
 window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
@@ -24,6 +53,7 @@ def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
+    planet = Sattelit(0, 0, 30, gelb, 1.98892 * 10 ** 30 )
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
@@ -36,4 +66,4 @@ def main():
 
     pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
 
-main()      #ich lasse die main() function laufen / ausführen
+main()      #ich lasse die main() function laufen / ausführen (call)
