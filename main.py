@@ -56,7 +56,7 @@ class Sattelit:
                 neue_punkte.append((x, y))
             pygame.draw.lines(window, self.farbe, False, neue_punkte, 2)
 
-        pygame.draw.circle(window, self.farbe, (x, y), self.radius, )
+        pygame.draw.circle(window, self.farbe, (x, y), self.radius)
 
 
 def main():
