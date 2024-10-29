@@ -31,6 +31,13 @@ class Sattelit:
     def __init__(self, x, y, radius, masse, farbe):
         self.x = x
         self.y = y
+
+        global self_x
+        self_x = self.x
+
+        global self_y
+        self_y = self.y
+
         self.radius = radius
         self.masse = masse      # in kg
         self.farbe = farbe
@@ -57,6 +64,14 @@ class Sattelit:
             pygame.draw.lines(window, self.farbe, False, neue_punkte, 2)
 
         pygame.draw.circle(window, self.farbe, (x, y), self.radius)
+
+    def anziehung(self, other):     #Static?
+        other_x = other.x
+        other_y = other.y
+        distance_x = other_x - self_x
+        distance_y = other_y - self_y
+
+
 
 
 def main():
