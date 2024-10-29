@@ -49,7 +49,7 @@ class Sattelit:
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
 
-    def draw(self, window):
+    def draw(self, surface):
         x = self.x * self.Scale + breite / 2
         y = self.y * self.Scale + hoehe / 2
 
@@ -61,9 +61,9 @@ class Sattelit:
                 x = x * self.Scale + breite / 2
                 y = y * self.Scale + hoehe / 2
                 neue_punkte.append((x, y))
-            pygame.draw.lines(window, self.farbe, False, neue_punkte, 2)
+            pygame.draw.lines(surface, self.farbe, False, neue_punkte, 2)
 
-        pygame.draw.circle(window, self.farbe, (x, y), self.radius)
+        pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
     def anziehung(self, other):     #Static?
         other_x = other.x
