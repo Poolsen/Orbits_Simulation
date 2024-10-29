@@ -32,11 +32,11 @@ class Sattelit:
         self.x = x
         self.y = y
 
-        global self_x
-        self_x = self.x
+        #global self_x
+        #self_x = self.x
 
-        global self_y
-        self_y = self.y
+        #global self_y
+        #self_y = self.y
 
         self.radius = radius
         self.masse = masse      # in kg
@@ -68,9 +68,19 @@ class Sattelit:
     def anziehung(self, other):     #Static?
         other_x = other.x
         other_y = other.y
-        distance_x = other_x - self_x
-        distance_y = other_y - self_y
 
+        #distance_x = other_x - self_x
+        #distance_y = other_y - self_y
+
+        distance_x = other_x - self.x
+        distance_y = other_y - self.y
+
+        distance_generell = ma.sqrt(distance_x ** 2 +  distance_y ** 2)
+
+        f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
+
+        fx =
+        fy =
 
 
 
