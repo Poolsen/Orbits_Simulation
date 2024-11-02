@@ -1,6 +1,5 @@
 # installed packages: pygame
 
-
 # Path to your virtual environment
 venv_path = r"venv\Scripts\activate_this.py" #das ist der Pfad, um zu activate_this.py zu kommen und es dann auszuführen, was dann das venv startet → packages verfügbar
 
@@ -21,13 +20,14 @@ pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 
 weiss = (255, 255, 255)     #eine rgb farbe
 gelb = (255, 255, 0)        #eine rgb farbe
+hellblau = (102, 178, 255)
 FPS = 60        #mit wie viel FPS die Animation laufen soll
 
 class Satellit:
     AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    Scale = 250 / AE        # 1 Astronomische Einheit entspricht ca. 100 pixeln
-    TimeStep = 3600 * 24    # 1 Tag, der Satellit updated sich also 1-Mal pro Tag
+    Scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
+    TimeStep = 60    # 1 / 2 Tag, der Satellit updated sich also 1-Mal pro Tag
 
     def __init__(self, x, y, radius, masse, farbe):
         self.x = x
@@ -67,6 +67,7 @@ class Satellit:
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
     def anziehung(self, other):     #Static?        resolved: Nein
+
         other_x = other.x
         other_y = other.y
 
@@ -76,15 +77,20 @@ class Satellit:
         distance_x = other_x - self.x
         distance_y = other_y - self.y
 
-        distance_generell = ma.sqrt(distance_x ** 2 +  distance_y ** 2)
+        distance_generell = ma.sqrt(distance_x ** 2 + distance_y ** 2)
 
         f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
 
-        alpha = ma.asin(distance_x / distance_generell)
+        if distance_y == 0:
+            alpha = 90
+            alpha = ma.radians(alpha)
 
-        fy = ma.cos(alpha) * f_generell
-        fx = (distance_generell * distance_x * fy) / (distance_y * f_generell)
+        else:
+            alpha = ma.atan(distance_x / distance_y)
 
+        fy =  ma.cos(alpha) * f_generell
+        #fx = (distance_generell * distance_x * fy) / (distance_y * f_generell)
+        fx =  ma.sin(alpha) * f_generell
         return fx, fy
 
     def postion_berechnen(self, satelliten):
@@ -95,7 +101,7 @@ class Satellit:
             if self.planet is True:
                 continue
 
-            else:
+            if self != satellit:
                 fx, fy = self.anziehung(satellit)
                 f_x_total += fx
                 f_y_total += fy
@@ -114,24 +120,26 @@ def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
-    satelliten = []
+    erde = Satellit(0, 0, 30, 5.972 * 10**24, hellblau)
+    erde.planet = True
 
+    s1 = Satellit(-36000 * 1000, 0, 20, 200, weiss)
+    s1.y_v = 3.1  * 1000      #3.1 km/s --> 3100 m/s
 
-
+    satelliten = [erde, s1]
 
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
-
+        window.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
         for event in pygame.event.get():    # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
             if event.type == pygame.QUIT:   # wenn auf das X gedrückt wird
                 run = False                 # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
 
-        for planet in satelliten:
-            planet.update_position(satelliten)
-            planet.draw(window)
+        for satellit in satelliten:
+            satellit.postion_berechnen(satelliten)
+            satellit.draw(window)
 
-        window.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
         pygame.display.update()     #updated, was angezeigt wird
 
     pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
