@@ -1,5 +1,6 @@
 # installed packages: pygame
 
+
 # Path to your virtual environment
 venv_path = r"venv\Scripts\activate_this.py" #das ist der Pfad, um zu activate_this.py zu kommen und es dann auszuführen, was dann das venv startet → packages verfügbar
 
@@ -12,8 +13,8 @@ import math as ma   # für ein paar funktionen nützlich
 
 pygame.init()
 
-breite = 800   #hoehe des windows
-hoehe = 800    #breite des windows
+breite = 800   #breite des windows
+hoehe = 800    #hoehe des windows
 
 window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
@@ -22,11 +23,11 @@ weiss = (255, 255, 255)     #eine rgb farbe
 gelb = (255, 255, 0)        #eine rgb farbe
 FPS = 60        #mit wie viel FPS die Animation laufen soll
 
-class Sattelit:
+class Satellit:
     AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
     Scale = 250 / AE        # 1 Astronomische Einheit entspricht ca. 100 pixeln
-    TimeStep = 3600 * 24    # 1 Tag, der Sattelit updated sich also 1 mal pro Tag
+    TimeStep = 3600 * 24    # 1 Tag, der Satellit updated sich also 1-Mal pro Tag
 
     def __init__(self, x, y, radius, masse, farbe):
         self.x = x
@@ -65,7 +66,7 @@ class Sattelit:
 
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
-    def anziehung(self, other):     #Static?
+    def anziehung(self, other):     #Static?        resolved: Nein
         other_x = other.x
         other_y = other.y
 
@@ -79,8 +80,33 @@ class Sattelit:
 
         f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
 
-        fx =
-        fy =
+        alpha = ma.asin(distance_x / distance_generell)
+
+        fy = ma.cos(alpha) * f_generell
+        fx = (distance_generell * distance_x * fy) / (distance_y * f_generell)
+
+        return fx, fy
+
+    def postion_berechnen(self, satelliten):
+        f_x_total = f_y_total = 0
+
+        for satellit in satelliten:
+
+            if self.planet is True:
+                continue
+
+            else:
+                fx, fy = self.anziehung(satellit)
+                f_x_total += fx
+                f_y_total += fy
+
+        self.x_v = self.x_v + (f_x_total / self.masse) * self.TimeStep      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
+        self.y_v = self.y_v + (f_y_total / self.masse) * self.TimeStep
+
+        self.x = self.x + self.x_v * self.TimeStep
+        self.y = self.y + self.y_v * self.TimeStep
+
+        self.orbit.append((self.x, self.y))
 
 
 
@@ -88,16 +114,25 @@ def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
-    planet = Sattelit(0, 0, 30, gelb, 1.98892 * 10 ** 30 )      #! hier noch mit Sonnen - Variablen
+    satelliten = []
+
+
+
+
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
-        #window.fill(weiss)  # hintergrundfarbe des windows
-        #pygame.display.update()     #updated, was angezeigt wird
 
         for event in pygame.event.get():    # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
             if event.type == pygame.QUIT:   # wenn auf das X gedrückt wird
                 run = False                 # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
+
+        for planet in satelliten:
+            planet.update_position(satelliten)
+            planet.draw(window)
+
+        window.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
+        pygame.display.update()     #updated, was angezeigt wird
 
     pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
 
