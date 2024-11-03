@@ -86,8 +86,13 @@ class Satellit:
 
         if distance_generell == 0:
             f_generell = 0
-            fx = 0
-            fy = 0
+
+            # ab hier eigentlich unnötig, da fy und fx sowieso = 0 sind, aber für Verständlichkeit // UND: dass eventuell kein Fehler bei distance = 0 kommt, da fx und fy = undefined
+            alpha = ma.atan2(distance_y, distance_x)
+
+            fy = ma.sin(alpha) * f_generell
+
+            fx = ma.cos(alpha) * f_generell
 
         else:
             f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
