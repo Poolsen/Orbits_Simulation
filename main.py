@@ -28,6 +28,8 @@ class Satellit:
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
     Scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
     TimeStep = 60    # 1 / 2 Tag, der Satellit updated sich also 1-Mal pro Tag
+    font = pygame.font.SysFont("comicsans", 16)
+
 
     def __init__(self, x, y, radius, masse, farbe):
         self.x = x
@@ -49,6 +51,7 @@ class Satellit:
 
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
+        #self.fx = 0
 
     def draw(self, surface):
         x = self.x * self.Scale + breite / 2
@@ -66,6 +69,7 @@ class Satellit:
 
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
+
     def anziehung(self, other):     #Static?        resolved: Nein
 
         other_x = other.x
@@ -79,18 +83,21 @@ class Satellit:
 
         distance_generell = ma.sqrt(distance_x ** 2 + distance_y ** 2)
 
-        f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
 
-        if distance_y == 0:
-            alpha = 90
-            alpha = ma.radians(alpha)
+        if distance_generell == 0:
+            f_generell = 0
+            fx = 0
+            fy = 0
 
         else:
-            alpha = ma.atan(distance_x / distance_y)
+            f_generell = (self.G * self.masse * other.masse) / distance_generell ** 2
 
-        fy =  ma.cos(alpha) * f_generell
-        #fx = (distance_generell * distance_x * fy) / (distance_y * f_generell)
-        fx =  ma.sin(alpha) * f_generell
+            alpha = ma.atan2(distance_y, distance_x)
+
+            fy = ma.sin(alpha) * f_generell
+
+            fx = ma.cos(alpha) * f_generell
+
         return fx, fy
 
     def postion_berechnen(self, satelliten):
@@ -106,11 +113,12 @@ class Satellit:
                 f_x_total += fx
                 f_y_total += fy
 
-        self.x_v = self.x_v + (f_x_total / self.masse) * self.TimeStep      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
-        self.y_v = self.y_v + (f_y_total / self.masse) * self.TimeStep
+        self.x_v += (f_x_total / self.masse) * self.TimeStep      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
+        self.y_v += (f_y_total / self.masse) * self.TimeStep
 
-        self.x = self.x + self.x_v * self.TimeStep
-        self.y = self.y + self.y_v * self.TimeStep
+        self.x += self.x_v * self.TimeStep
+        self.y += self.y_v * self.TimeStep
+
 
         self.orbit.append((self.x, self.y))
 
