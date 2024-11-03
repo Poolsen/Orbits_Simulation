@@ -27,7 +27,7 @@ class Satellit:
     AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
     Scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
-    TimeStep = 60    # 1 / 2 Tag, der Satellit updated sich also 1-Mal pro Tag
+    TimeStep = 60           # 1 Minute pro Frame
     font = pygame.font.SysFont("comicsans", 16)
 
 
@@ -97,7 +97,7 @@ class Satellit:
             fy = ma.sin(alpha) * f_generell
 
             fx = ma.cos(alpha) * f_generell
-
+            #print(alpha * 180 / ma.pi) #debugging fertig
         return fx, fy
 
     def postion_berechnen(self, satelliten):
@@ -113,8 +113,8 @@ class Satellit:
                 f_x_total += fx
                 f_y_total += fy
 
-        self.x_v += (f_x_total / self.masse) * self.TimeStep      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
-        self.y_v += (f_y_total / self.masse) * self.TimeStep
+        self.x_v = self.x_v + (f_x_total / self.masse) * self.TimeStep      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
+        self.y_v = self.y_v + (f_y_total / self.masse) * self.TimeStep
 
         self.x += self.x_v * self.TimeStep
         self.y += self.y_v * self.TimeStep
