@@ -1,6 +1,4 @@
 import pygame
-import math as ma   # für ein paar funktionen nützlich
-
 
 pygame.init()
 
