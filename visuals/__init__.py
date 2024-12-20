@@ -1,0 +1,1 @@
+print("Visuals are initialized!")
