@@ -1,25 +1,6 @@
 import math as ma
 
-class Satellit:
-    AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
-    G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    Scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
-    deltaTime = 60           # 1 Minute pro Frame
-
-    def __init__(self, x, y, radius, masse, farbe):
-        self.x = x
-        self.y = y
-
-        self.radius = radius
-        self.masse = masse      # in kg
-        self.farbe = farbe
-
-        self.orbit = []
-        self.planet = False
-        self.abstand_zu_Planet = 0
-
-        self.x_v = 0    #geschwindigkeit (in x - Richtung)
-        self.y_v = 0    #geschwindigkeit (in y - Richtung)
+class CalculationsMixin:
 
     def anziehung(self, other):     #Static?        resolved: Nein
 
