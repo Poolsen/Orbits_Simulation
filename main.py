@@ -1,5 +1,8 @@
 import pygame
 import math as ma   # für ein paar funktionen nützlich
+import physics
+import visuals
+
 
 pygame.init()
 
@@ -13,24 +16,18 @@ weiss = (255, 255, 255)     #eine rgb farbe
 gelb = (255, 255, 0)        #eine rgb farbe
 hellblau = (102, 178, 255)
 FPS = 60        #mit wie viel FPS die Animation laufen soll
+font = pygame.font.SysFont("comicsans", 16)
 
 class Satellit:
     AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
     Scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
     TimeStep = 60           # 1 Minute pro Frame
-    font = pygame.font.SysFont("comicsans", 16)
 
 
     def __init__(self, x, y, radius, masse, farbe):
         self.x = x
         self.y = y
-
-        #global self_x
-        #self_x = self.x
-
-        #global self_y
-        #self_y = self.y
 
         self.radius = radius
         self.masse = masse      # in kg
@@ -42,7 +39,6 @@ class Satellit:
 
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
-        #self.fx = 0
 
     def draw(self, surface):
         x = self.x * self.Scale + breite / 2
@@ -65,9 +61,6 @@ class Satellit:
 
         other_x = other.x
         other_y = other.y
-
-        #distance_x = other_x - self_x
-        #distance_y = other_y - self_y
 
         distance_x = other_x - self.x
         distance_y = other_y - self.y
