@@ -14,23 +14,25 @@ hellblau = (102, 178, 255)
 FPS = 60        #mit wie viel FPS die Animation laufen soll
 font = pygame.font.SysFont("comicsans", 16)
 
-class Satellit:
-    AE = 149600000 * 1000   #149,6 Millionen km, aber in metern also * 1000
+class Himmelskoerper:
+    # AE = 149600000 * 1000  #149,6 Millionen km, aber in metern also * 1000 // jetzt bei class Visualisierung
     G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    scale = 1 / 1e5         # 1 Pixel = 100.000 m = 100 km
+    # scale = 1 / 1e5       # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
     deltaTime = 60           # 1 Minute pro Frame
 
-    def __init__(self, x, y, radius, masse, farbe):
+    def __init__(self, x, y, masse):
         self.x = x
         self.y = y
-        self.radius = radius
+        # self.radius = radius // jetzt bei class Visualisierung
         self.masse = masse      # in kg
-        self.farbe = farbe
+        # self.farbe = farbe // jetzt bei class Visualisierung
         self.orbit = []
         self.planet = False
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
 
+
+class BewegenderHimmelskoerper(Himmelskoerper):
 
     def anziehung(self, other):     #Static?        resolved: Nein
 
@@ -64,10 +66,11 @@ class Satellit:
             #print(alpha * 180 / ma.pi) #debugging fertig
         return fx, fy
 
-    def postion_berechnen(self, satelliten):
+    def position_berechnen(self, satelliten):
         f_x_total = f_y_total = 0
 
-        for satellit in satelliten:
+        for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen
+            satellit = tupel[0]
 
             if self.planet is True:
                 continue
@@ -83,19 +86,28 @@ class Satellit:
         self.x += self.x_v * self.deltaTime
         self.y += self.y_v * self.deltaTime
 
-
         self.orbit.append((self.x, self.y))
 
-    def draw(self, surface):
-        x = self.x * self.scale + breite / 2
-        y = self.y * self.scale + hoehe / 2
+class Visualisierung:
 
-        if len(self.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
+    def __init__(self, farbe, radius):
+        self.scale = 1 / 1e5        # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
+        self.farbe = farbe          #farbe des Koerpers beim Visualisieren
+        self.radius = radius        #radius beim Vis
+        #koerper.orbit = orbit         #punkte, die gezeichnet bzw. in draw_punkte übertragen werden
+        #koerper.x = x                 # wird aus class BewegenderHimmelskoerper übernommen
+        #koerper.y = y                 # wird aus class BH übernommen
+
+    def draw(self, koerper, surface):
+        x = koerper.x * self.scale + breite / 2
+        y = koerper.y * self.scale + hoehe / 2
+
+        if len(koerper.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
             draw_punkte = []
-            for point in self.orbit:
+            for point in koerper.orbit:
                 x, y = point
-                x = x * self.scale + breite / 2
-                y = y * self.scale + hoehe / 2
+                x = x * self.scale + breite / 2     # hier in pixeln
+                y = y * self.scale + hoehe / 2      # in pixeln
                 draw_punkte.append((x, y))
             pygame.draw.lines(surface, self.farbe, False, draw_punkte, 2)
 
@@ -106,13 +118,16 @@ def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
-    erde = Satellit(0, 0, 30, 5.972 * 10**24, hellblau)
+    erde = BewegenderHimmelskoerper(0, 0,  5.972 * 10**24)
     erde.planet = True
+    erde_vis = Visualisierung(hellblau, 30)
 
-    s1 = Satellit(-36000 * 1000, 0, 20, 200, weiss)
+
+    s1 = BewegenderHimmelskoerper(-36000 * 1000, 0,  200)
     s1.y_v = 3.1  * 1000      #3.1 km/s --> 3100 m/s
+    s1_vis = Visualisierung(weiss, 20)
 
-    satelliten = [erde, s1]
+    satelliten = [(erde, erde_vis), (s1, s1_vis)]
 
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
@@ -123,13 +138,13 @@ def main():
             if event.type == pygame.QUIT:   # wenn auf das X gedrückt wird
                 run = False                 # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
 
-        for satellit in satelliten:
-            satellit.postion_berechnen(satelliten)
-            satellit.draw(window)
+        for (koerper, koerper_vis) in satelliten:
+            koerper.position_berechnen(satelliten)
+
+            koerper_vis.draw(koerper, window)
 
         pygame.display.update()     #updated, was angezeigt wird
 
     pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
 
 main()      #ich lasse die main() function laufen / ausführen (call)
-
