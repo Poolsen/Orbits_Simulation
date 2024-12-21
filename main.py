@@ -1,5 +1,6 @@
 import pygame
 import math as ma
+
 pygame.init()
 
 breite = 800   #breite des windows
@@ -15,11 +16,11 @@ FPS = 60        #mit wie viel FPS die Animation laufen soll
 font = pygame.font.SysFont("comicsans", 16)
 
 class Himmelskoerper:
-    # AE = 149600000 * 1000  #149,6 Millionen km, aber in metern also * 1000 // jetzt bei class Visualisierung
-    G = 6.67428e-11         #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    # scale = 1 / 1e5       # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
-    deltaTime = 60           # 1 Minute pro Frame
 
+    # AE = 149600000 * 1000  #149,6 Millionen km, aber in metern also * 1000 // jetzt bei class Visualisierung
+    G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
+    # scale = 1 / 1e5        # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
+    deltaTime = 60           # 1 Minute pro Frame
     def __init__(self, x, y, masse):
         self.x = x
         self.y = y
@@ -72,7 +73,7 @@ class BewegenderHimmelskoerper(Himmelskoerper):
         for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen
             satellit = tupel[0]
 
-            if self.planet is True:
+            if self.planet is True:     # WARUM?
                 continue
 
             if self != satellit:
@@ -124,7 +125,7 @@ def main():
 
 
     s1 = BewegenderHimmelskoerper(-36000 * 1000, 0,  200)
-    s1.y_v = 3.1  * 1000      #3.1 km/s --> 3100 m/s
+    s1.y_v = 3.1 * 1000      #3.1 km/s --> 3100 m/s
     s1_vis = Visualisierung(weiss, 20)
 
     satelliten = [(erde, erde_vis), (s1, s1_vis)]
