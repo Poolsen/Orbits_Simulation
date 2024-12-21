@@ -1,6 +1,6 @@
 import pygame
 
-pygame.init()
+#pygame.init()      # wird in main.py gemacht
 
 breite = 800   #breite des windows
 hoehe = 800    #hoehe des windows

@@ -1,5 +1,8 @@
 import sys
 import pygame
+pygame.init()   #ich mache es hier und NICHT in vis_Himmelskörper, da so immer initialisiert wird
+
+# classes etc. from other files
 from Satellites_Calculations import BewegenderHimmelskoerper
 from Visuals import Visualisierung
 
