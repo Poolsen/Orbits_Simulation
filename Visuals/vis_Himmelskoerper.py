@@ -5,7 +5,7 @@ import pygame
 breite = 800   #breite des windows
 hoehe = 800    #hoehe des windows
 
-window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
+screen = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 
 weiss = (255, 255, 255)     #eine rgb farbe

@@ -18,7 +18,7 @@ hellblau = (102, 178, 255)
 #pygame stuff
 breite = 800
 hoehe = 800
-window = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
+screen = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 
 def main():

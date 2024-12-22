@@ -11,11 +11,3 @@ class Rectangle(Button):
         super().__init__(x, y, color)
         pass
 
-
-class Circle(Button):
-    pass
-
-class Cross(Button):
-    pass
-
-
