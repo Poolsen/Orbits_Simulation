@@ -39,7 +39,7 @@ def main():
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
-        window.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
+        screen.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
 
         for event in pygame.event.get():    # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
             if event.type == pygame.QUIT:   # wenn auf das X gedrückt wird
@@ -48,7 +48,7 @@ def main():
         for (koerper, koerper_vis) in satelliten:
             koerper.position_berechnen(satelliten)
 
-            koerper_vis.draw(koerper, window)
+            koerper_vis.draw(koerper, screen)
 
         pygame.display.update()     #updated, was angezeigt wird
 
