@@ -1,9 +1,10 @@
 import math as ma
+from config import *
 
 class Himmelskoerper:
 
     G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    deltaTime = 60           # 1 Minute pro Frame
+    deltaTime = 60           # 1 Minute pro Frame wird "berechnet"
 
     def __init__(self, x, y, masse):
         self.x = x

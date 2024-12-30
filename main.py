@@ -1,25 +1,9 @@
-import sys
-import pygame
-pygame.init()   #ich mache es hier und NICHT in vis_Himmelskörper, da so immer initialisiert wird
+from config import *
 
 # classes etc. from other files
 from Satellites_Calculations import BewegenderHimmelskoerper
-from Visuals import Visualisierung
+from Visuals import Visualisierung, Button
 
-
-#constants
-FPS = 60
-
-#colors
-weiss = (255, 255, 255)     #eine rgb farbe
-gelb = (255, 255, 0)        #eine rgb farbe
-hellblau = (102, 178, 255)
-
-#pygame stuff
-breite = 800
-hoehe = 800
-screen = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
-pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 
 def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
@@ -36,6 +20,7 @@ def main():
 
     satelliten = [(erde, erde_vis), (s1, s1_vis)]
 
+    button1 = Button('Click me',200,40,(200,250),5)
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
@@ -49,6 +34,8 @@ def main():
             koerper.position_berechnen(satelliten)
 
             koerper_vis.draw(koerper, screen)
+
+        button1.draw()
 
         pygame.display.update()     #updated, was angezeigt wird
 
