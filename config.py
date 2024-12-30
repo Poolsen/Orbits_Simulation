@@ -1,11 +1,14 @@
 # definition aller variablen
 import pygame
-import sys  #wird gebraucht in main.py (unused - Anzeige ignorieren)
+import sys  #wird hier gebraucht, da auch in main.py gebraucht (→ unused - Anzeige ignorieren)
 
 pygame.init()
 
 #constants
 FPS = 60
+
+#screen to show
+screen_to_show = "main_menu"
 
 #colors
 weiss = (255, 255, 255)     #eine rgb farbe

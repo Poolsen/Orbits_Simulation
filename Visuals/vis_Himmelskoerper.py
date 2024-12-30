@@ -1,17 +1,5 @@
 from config import *
 
-
-breite = 800  # breite des windows
-hoehe = 800  # hoehe des windows
-
-screen = pygame.display.set_mode((breite, hoehe))  # window wird erstellt
-pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
-
-weiss = (255, 255, 255)  # eine rgb farbe
-gelb = (255, 255, 0)  # eine rgb farbe
-hellblau = (102, 178, 255)
-font = pygame.font.SysFont("comicsans", 16)
-
 class Visualisierung:
 
     def __init__(self, farbe, radius):

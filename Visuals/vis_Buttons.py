@@ -8,7 +8,7 @@ class Button:
 
         # top rectangle
         self.rect = pygame.Rect(pos,(width,height))
-        self.color = (200, 200, 200)
+        self.color = (100, 100, 100)
 
         #text
         self.text_surf = font.render(text,True,(255, 255, 255))
