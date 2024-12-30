@@ -58,8 +58,8 @@ class BewegenderHimmelskoerper(Himmelskoerper):
         for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an Stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen
             satellit = tupel[0]
 
-            if self.planet is True:     # WARUM?
-                continue
+            #if self.planet is True:     # WARUM?
+            #    continue
 
             if self != satellit:
                 fx, fy = self.anziehung(satellit)
@@ -74,3 +74,11 @@ class BewegenderHimmelskoerper(Himmelskoerper):
 
         self.orbit.append((self.x, self.y))
 
+def init_satelliten_physics():
+    erde = BewegenderHimmelskoerper(0, 0,  5.972 * 10**24)
+    erde.planet = True
+
+    s1 = BewegenderHimmelskoerper(-36000 * 1000, 0,  200)
+    s1.y_v = 3.1 * 1000      #3.1 km/s --> 3100 m/s
+
+    return erde, s1

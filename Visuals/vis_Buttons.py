@@ -33,4 +33,7 @@ class Button:
         else:
             self.color = (100, 100, 100)
 
-
+def init_buttons():
+    button1 = Button('Click me',200,40,(200,250),5)
+    buttons = [button1, ]
+    return buttons

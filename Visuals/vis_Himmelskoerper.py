@@ -1,4 +1,5 @@
 from config import *
+from Satellites_Calculations import init_satelliten_physics
 
 class Visualisierung:
 
@@ -25,3 +26,14 @@ class Visualisierung:
 
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
+
+
+def init_satelliten():
+
+    erde, s1 = init_satelliten_physics()
+
+    erde_vis = Visualisierung(hellblau, 30)
+
+    s1_vis = Visualisierung(weiss, 20)
+
+    return [(erde, erde_vis), (s1, s1_vis)]

@@ -27,5 +27,3 @@ hoehe = 800  # hoehe des windows
 
 pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
 
-#buttons
-buttons = ["button1"]

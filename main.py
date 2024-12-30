@@ -1,26 +1,16 @@
 from config import *
 
-# classes etc. from other files
-from Satellites_Calculations import BewegenderHimmelskoerper
-from Visuals import Visualisierung, Button
+# initiates both physics and visual aspects of buttons and satellites
+from Visuals import init_buttons, init_satelliten
 
 
 def main():
     run = True  #by default soll das Programm laufen und sich nicht schließen
     clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt
 
-    erde = BewegenderHimmelskoerper(0, 0,  5.972 * 10**24)
-    erde.planet = True
-    erde_vis = Visualisierung(hellblau, 30)
+    satelliten = init_satelliten()
+    buttons = init_buttons()
 
-
-    s1 = BewegenderHimmelskoerper(-36000 * 1000, 0,  200)
-    s1.y_v = 3.1 * 1000      #3.1 km/s --> 3100 m/s
-    s1_vis = Visualisierung(weiss, 20)
-
-    satelliten = [(erde, erde_vis), (s1, s1_vis)]
-
-    button1 = Button('Click me',200,40,(200,250),5)
 
     while run:  #während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)      # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
@@ -35,7 +25,8 @@ def main():
 
             koerper_vis.draw(koerper, screen)
 
-        button1.draw()
+        for button in buttons:
+            button.draw()
 
         pygame.display.update()     #updated, was angezeigt wird
 
