@@ -8,7 +8,7 @@ pygame.init()
 FPS = 60
 
 #screen to show
-screen_to_show = "main_menu"
+screen_to_show = "main_menu"    #default
 
 #colors
 weiss = (255, 255, 255)     #eine rgb farbe
@@ -26,3 +26,6 @@ breite = 800  # breite des windows
 hoehe = 800  # hoehe des windows
 
 pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
+
+#buttons
+buttons = ["button1"]
