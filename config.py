@@ -8,7 +8,7 @@ pygame.init()
 FPS = 60
 
 #screen to show
-screen_to_show = "main_menu"    #default
+#screen_to_show = "vis_Himmelskoerper"    #default
 
 #colors
 weiss = (255, 255, 255)     #eine rgb farbe
@@ -21,6 +21,7 @@ hoehe = 800
 screen = pygame.display.set_mode((breite, hoehe))   #window wird erstellt
 pygame.display.set_caption("Orbits_Simulation")     # Titel des Windows
 font = pygame.font.SysFont("comicsans", 16)
+
 
 breite = 800  # breite des windows
 hoehe = 800  # hoehe des windows

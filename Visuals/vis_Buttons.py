@@ -6,7 +6,7 @@ class Button:
         self.pressed = False
         self.elevation = elevation
 
-        # top rectangle
+        #rectangle
         self.rect = pygame.Rect(pos,(width,height))
         self.color = (100, 100, 100)
 
@@ -15,10 +15,9 @@ class Button:
         self.text_rect = self.text_surf.get_rect(center = self.rect.center)
 
     def draw(self):
-        # elevation logic
         pygame.draw.rect(screen,self.color, self.rect,border_radius = 12)
         screen.blit(self.text_surf, self.text_rect)
-        self.check_click()
+        return self.check_click()
 
     def check_click(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -26,14 +25,18 @@ class Button:
             self.color = (200, 200, 200)
             if pygame.mouse.get_pressed()[0]:
                 self.pressed = True
+                return False
+            elif self.pressed is True:
+                print('click')
+                self.pressed = False
+                return True     # wurde gecklicked
             else:
-                if self.pressed is True:
-                    print('click')
-                    self.pressed = False
+                return False
         else:
             self.color = (100, 100, 100)
+            return False        # wurde nicht gecklicked
 
 def init_buttons():
-    button1 = Button('Click me',200,40,(200,250),5)
-    buttons = [button1, ]
+    button0 = Button('Click me',200,40,(200,250),5)
+    buttons = [button0, ]
     return buttons
