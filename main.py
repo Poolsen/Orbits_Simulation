@@ -9,9 +9,7 @@ def main():
     satelliten = init_satelliten()
     buttons = init_buttons()
 
-
     draw_current_screen(satelliten, buttons, clock, "vis_Himmelskoerper")
-
 
     pygame.quit()       # nachdem wir aus dem loop raus sind, soll auch
     sys.exit()
