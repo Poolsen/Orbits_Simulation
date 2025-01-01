@@ -52,6 +52,8 @@ def vis_draw_himmelskoeper(satelliten, buttons):
         koerper_vis.draw(koerper, screen)
 
     for button in buttons:
+        if button.id == 1:      #button 1 ist der resume button, dieser darf nicht im animation screen gerendert werden
+            continue
         button_returns = [button.draw()]
         #print(button_returns) #nur fpr debugging
         if button_returns[0] is True:

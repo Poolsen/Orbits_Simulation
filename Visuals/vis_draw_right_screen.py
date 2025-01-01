@@ -15,8 +15,8 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 pygame.display.update()
 
             case "vis_paused_animation":
-                vis_draw_paused_animation(buttons)
-                pygame.display.update(buttons_update_pos[0])
+                screen_to_show = vis_draw_paused_animation(buttons)
+                pygame.display.update(buttons_update_pos[1])
 
             case "vis_start_menu":
                 pass
