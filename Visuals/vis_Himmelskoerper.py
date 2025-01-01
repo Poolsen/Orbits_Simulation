@@ -16,13 +16,35 @@ class Visualisierung:
         y = koerper.y * self.scale + hoehe / 2
 
         if len(koerper.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
+            while len(koerper.orbit) >= 900:
+                del koerper.orbit[0]
+
             draw_punkte = []
+
             for point in koerper.orbit:
                 x, y = point
                 x = x * self.scale + breite / 2     # hier in pixeln
                 y = y * self.scale + hoehe / 2      # in pixeln
+
                 draw_punkte.append((x, y))
-            pygame.draw.lines(surface, self.farbe, False, draw_punkte, 2)
+
+            #was zur hölle mache ich hier nur; ist "natürlich nur temporary" (temporary für immer)
+
+            try:
+                pygame.draw.lines(surface, (0, 0, 0),       False, draw_punkte[0:15],       2)
+                pygame.draw.lines(surface, (25, 25, 25),    False, draw_punkte[15:30],      2)
+                pygame.draw.lines(surface, (50, 50, 50),    False, draw_punkte[30:45],      2)
+                pygame.draw.lines(surface, (75, 75, 75),    False, draw_punkte[45:60],      2)
+                pygame.draw.lines(surface, (100, 100, 100), False, draw_punkte[60:75],      2)
+                pygame.draw.lines(surface, (125, 125, 125), False, draw_punkte[75:90],      2)
+                pygame.draw.lines(surface, (150, 150, 150), False, draw_punkte[90:105],     2)
+                pygame.draw.lines(surface, (175, 175, 175), False, draw_punkte[105:120],    2)
+                pygame.draw.lines(surface, (200, 200, 200), False, draw_punkte[120:135],    2)
+                pygame.draw.lines(surface, (225, 225, 225), False, draw_punkte[135:150],    2)
+                pygame.draw.lines(surface, (250, 250, 250), False, draw_punkte[150:900],    2)
+
+            except ValueError:      # don't worry, be happy
+               pass                 # I think I like this "try" "except" thingy (:
 
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
