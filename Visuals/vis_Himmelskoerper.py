@@ -1,5 +1,3 @@
-import sys
-
 from config import *
 from Satellites_Calculations import init_satelliten_physics
 

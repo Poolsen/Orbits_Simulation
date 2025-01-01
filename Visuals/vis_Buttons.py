@@ -37,11 +37,11 @@ class Button:
             return False        # wurde nicht gecklickt
 
 def init_buttons():
-    button0 = Button(text='| |', pos=(750, 750), width=45, height=45, ident=0, font_to_use=font_pause_button)    #pos ist hier die ecke oben links
-    button1 = Button(text='continue', pos=(700, 750), width=95, height=45, ident=1, font_to_use=font_comic_sans)
+    button0 = Button(text='| |', pos=(750, 750), width=45, height=45, ident=0, font_to_use=font_pause_button)       #pos ist hier die ecke oben links  // pause button
+    button1 = Button(text='continue', pos=(700, 750), width=95, height=45, ident=1, font_to_use=font_comic_sans)    #continue button
     buttons = [button0, button1, ]
     buttons_update_pos = [          #welche positionen müssen durch pygame.display.update(buttons_update_pos)
-        pygame.Rect((750, 750), (45, 45)),
-        pygame.Rect((700, 750), (95, 45)),
+        pygame.Rect((750, 750), (45, 45)),  #pause button
+        pygame.Rect((700, 750), (95, 45)),  #continue button
     ]
     return buttons, buttons_update_pos
