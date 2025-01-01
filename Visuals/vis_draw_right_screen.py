@@ -22,7 +22,7 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 screen_to_show = vis_draw_paused_animation(buttons)
                 vis_show_current_fps()
                 buttons_update_pos_to_pass = [buttons_update_pos[1], buttons_update_pos[2]]
-                pygame.display.update(buttons_update_pos_to_pass)
+                pygame.display.update(buttons_update_pos_to_pass)   #so wird nur ein bestimmter teil des screens (der mit den buttons und dem FPS Counter) geupdated
 
             case "vis_start_menu":
                 pass
