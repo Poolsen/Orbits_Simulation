@@ -5,7 +5,6 @@ from Visuals import init_buttons, init_satelliten, draw_current_screen
 
 
 def main():
-    clock = pygame.time.Clock()     #eine Uhr, die u.a. restricted wie weit die Zeit gehen kann und für richtige "steps" sorgt, wird initialised
     satelliten = init_satelliten()
     buttons, buttons_update_pos = init_buttons()
 
