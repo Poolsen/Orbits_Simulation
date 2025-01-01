@@ -1,5 +1,7 @@
 print("Attempting to import visual packages")
-from .vis_Himmelskoerper import Visualisierung, init_satelliten
-from .vis_Buttons import Button, init_buttons
-from .vis_draw_right_screen import draw_current_screen
+from Visuals.vis_Himmelskoerper import Visualisierung, init_satelliten
+from Visuals.vis_Buttons import Button, init_buttons
+from Visuals.vis_Himmelskoerper import vis_draw_himmelskoeper
+from Visuals.vis_paused_animation import vis_draw_paused_animation
+from Visuals.vis_draw_right_screen import draw_current_screen
 print("Visual packages have been imported")
