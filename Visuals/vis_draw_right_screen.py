@@ -16,6 +16,7 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 pygame.display.update()
 
             case "vis_paused_animation":
+                buttons_update_pos[2] = vis_show_current_fps()      #muss geupdated werden, da sich die hitbox des FPS counters mit unterschiedlichen FPS ändern kann
                 pygame.draw.rect(screen, (0, 0, 0), buttons_update_pos[1])
                 pygame.draw.rect(screen, (0, 0, 0), buttons_update_pos[2])
                 screen_to_show = vis_draw_paused_animation(buttons)
