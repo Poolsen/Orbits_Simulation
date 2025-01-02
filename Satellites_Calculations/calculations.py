@@ -4,7 +4,7 @@ from config import *
 class Himmelskoerper:
 
     G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
-    deltaTime = 60           # 1 Minute pro Frame wird "berechnet"
+    #deltaTime = 60           # 1 Minute pro Frame wird "berechnet" in config
 
     def __init__(self, x, y, masse):
         self.x = x
@@ -66,11 +66,11 @@ class BewegenderHimmelskoerper(Himmelskoerper):
                 f_x_total += fx
                 f_y_total += fy
 
-        self.x_v = self.x_v + (f_x_total / self.masse) * self.deltaTime      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
-        self.y_v = self.y_v + (f_y_total / self.masse) * self.deltaTime
+        self.x_v = self.x_v + (f_x_total / self.masse) * deltaTime      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
+        self.y_v = self.y_v + (f_y_total / self.masse) * deltaTime
 
-        self.x += self.x_v * self.deltaTime
-        self.y += self.y_v * self.deltaTime
+        self.x += self.x_v * deltaTime
+        self.y += self.y_v * deltaTime
 
         self.orbit.append((self.x, self.y))
 

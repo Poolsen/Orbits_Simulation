@@ -1,6 +1,7 @@
 # definition aller variablen
 import pygame
 import sys  #wird hier gebraucht, da auch in main.py gebraucht (→ unused - Anzeige ignorieren)
+import datetime     #wird für vis_zeit gebraucht
 
 pygame.init()
 
@@ -34,3 +35,5 @@ hoehe = 800  # hoehe des windows
 
 pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
 
+
+deltaTime = 60          # 1 Minute pro Frame wird "berechnet"

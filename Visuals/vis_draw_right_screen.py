@@ -1,5 +1,5 @@
 from config import *
-from Visuals import vis_draw_himmelskoeper, vis_draw_paused_animation, vis_show_current_fps
+from Visuals import vis_draw_himmelskoeper, vis_draw_paused_animation, vis_show_current_fps, vis_ingame_time
 
 def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_update_pos):
     run = True #default, damit das programm anfängt zu laufen
@@ -13,6 +13,7 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 screen.fill((0, 0, 0))  # hintergrundfarbe des windows (schwarz)
                 screen_to_show = (vis_draw_himmelskoeper(satelliten, buttons))  #funktion macht gesamte logik und gibt gleichzeitig auch aus, ob der screen_to_show sich geändert hat
                 vis_show_current_fps()
+                vis_ingame_time()
                 pygame.display.update()
 
             case "vis_paused_animation":
@@ -32,4 +33,4 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 pass
             case _:
                 print("Der ausgewählte Screen existiert nicht!")
-                input(r"Drücke Enter, falls ")
+                input(r"Drücke Enter zum weitermachen")
