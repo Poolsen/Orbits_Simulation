@@ -13,7 +13,7 @@ def vis_ingame_time():
 
     current_time_text = f"Zeit: {formatted_current_date} Uhr"
 
-    return vis_draw_text(current_time_text, font_arial, (255, 255, 255), (5, 25),None)
+    vis_draw_text(current_time_text, font_arial, (255, 255, 255), (5, 25),None)
 
 
 
