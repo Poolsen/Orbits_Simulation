@@ -31,6 +31,7 @@ class Visualisierung:
             #was zur hölle mache ich hier nur; ist "natürlich nur temporary" (temporary für immer)
 
             try:
+                """ ehemaliger ansatz --> unten besser und smoother // evtl für performance aber schlechter (der neue code)
                 pygame.draw.lines(surface, (0, 0, 0),       False, draw_punkte[0:15],       2)
                 pygame.draw.lines(surface, (25, 25, 25),    False, draw_punkte[15:30],      2)
                 pygame.draw.lines(surface, (50, 50, 50),    False, draw_punkte[30:45],      2)
@@ -41,7 +42,13 @@ class Visualisierung:
                 pygame.draw.lines(surface, (175, 175, 175), False, draw_punkte[105:120],    2)
                 pygame.draw.lines(surface, (200, 200, 200), False, draw_punkte[120:135],    2)
                 pygame.draw.lines(surface, (225, 225, 225), False, draw_punkte[135:150],    2)
-                pygame.draw.lines(surface, (250, 250, 250), False, draw_punkte[150:900],    2)
+                pygame.draw.lines(surface, (255, 255, 255), False, draw_punkte[150:900],    2)
+                """
+
+                for n in range(150):
+                    pygame.draw.lines(surface, (int(n * 1.7), int(n * 1.7), int(n * 1.7)), False, draw_punkte[n:(n + 2)], 2)
+
+                pygame.draw.lines(surface, (255, 255, 255), False, draw_punkte[150:900],    2)
 
             except ValueError:      # don't worry, be happy
                pass                 # I think I like this "try" "except" thingy (:
