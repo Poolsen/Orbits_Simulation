@@ -5,7 +5,7 @@ current_date = datetime.datetime(2025, 1, 1, 0, 0)
 
 def vis_ingame_time():
 
-    time_increment = datetime.timedelta(seconds= deltaTime)
+    time_increment = datetime.timedelta(seconds = deltaTime)    #da hier deltaTime nur aus config gelesen werden muss, muss sie nicht davor mit global deklariert werden
 
     global current_date
     current_date = current_date + time_increment
