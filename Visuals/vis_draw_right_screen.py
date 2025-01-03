@@ -3,7 +3,6 @@ from Visuals import vis_draw_himmelskoeper, vis_draw_paused_animation, vis_show_
 
 def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_update_pos):
     run = True #default, damit das programm anfängt zu laufen
-    screen_to_show = screen_to_show
 
     while run:  # während run is True gilt, wird das window und pygame offen bleiben
         clock.tick(FPS)  # der loop läuft mit max. 60 fps, da das programm nach jedem loop schaut, wie lang es gebraucht hat
@@ -26,11 +25,18 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 pygame.display.update(buttons_update_pos_to_pass)   #so wird nur ein bestimmter teil des screens (der mit den buttons und dem FPS Counter) geupdated
 
             case "vis_start_menu":
-                pass
+                print("Existiert noch nicht!")
+                input("")
+                break
             case "vis_new_animation":
-                pass
+                print("Existiert noch nicht!")
+                input("")
+                break
             case "vis_saved_animation":
-                pass
+                print("Existiert noch nicht!")
+                input("")
+                break
             case _:
                 print("Der ausgewählte Screen existiert nicht!")
-                input(r"Drücke Enter zum weitermachen")
+                input(r"Drücke Enter um das Startmenü zu benutzen. ")
+                screen_to_show = "vis_start_menu"
