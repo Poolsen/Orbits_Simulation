@@ -1,10 +1,12 @@
 from config import *
+import config
 from Satellites_Calculations import init_satelliten_physics
+from Visuals import vis_scroll_change_scale
 
 class Visualisierung:
 
     def __init__(self, farbe, radius):
-        self.scale = 1 / 1e5        # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
+        #self.scale = 1 / 1e5        # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
         self.farbe = farbe          #farbe des Koerpers beim Visualisieren
         self.radius = radius        #radius beim Vis
         #koerper.orbit = orbit         #punkte, die gezeichnet bzw. in draw_punkte übertragen werden
@@ -12,8 +14,8 @@ class Visualisierung:
         #koerper.y = y                 # wird aus class BH übernommen
 
     def draw(self, koerper, surface):
-        x = koerper.x * self.scale + breite / 2
-        y = koerper.y * self.scale + hoehe / 2
+        x = koerper.x * config.scale + breite / 2
+        y = koerper.y * config.scale + hoehe / 2
 
         if len(koerper.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
             while len(koerper.orbit) >= 900:
@@ -23,8 +25,8 @@ class Visualisierung:
 
             for point in koerper.orbit:
                 x, y = point
-                x = x * self.scale + breite / 2     # hier in pixeln
-                y = y * self.scale + hoehe / 2      # in pixeln
+                x = x * config.scale + breite / 2     # hier in pixeln
+                y = y * config.scale + hoehe / 2      # in pixeln
 
                 draw_punkte.append((x, y))
 
@@ -73,6 +75,9 @@ def vis_draw_himmelskoeper(satelliten, buttons):
             # run = False  # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.MOUSEWHEEL:
+            vis_scroll_change_scale(event.y)
+
     for (koerper, koerper_vis) in satelliten:
         koerper.position_berechnen(satelliten)
 

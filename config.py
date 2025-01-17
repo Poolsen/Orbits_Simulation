@@ -37,3 +37,7 @@ pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
 
 
 deltaTime = 60          # 1 Minute pro Frame wird "berechnet"
+
+
+scale_divis = 1e5
+scale = 1 / scale_divis

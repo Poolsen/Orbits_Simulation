@@ -1,11 +1,14 @@
 from config import *
+#from Visuals import vis_scroll_change_scale
 
 def vis_draw_paused_animation(buttons):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            #run = False
             pygame.quit()
             sys.exit()
+        #elif event.type == pygame.MOUSEWHEEL: #während vis_paused_animation sollte man nicht scale andern können, da das sonst ganze update logic mit optimization zerstört
+        #    vis_scroll_change_scale(event.y)
 
     for button in buttons:
         if button.id == 0:  # button 0 ist der pause button, dieser darf nicht im animation screen gerendert werden
