@@ -38,5 +38,5 @@ def draw_current_screen(satelliten, buttons, clock, screen_to_show, buttons_upda
                 break
             case _:
                 print("Der ausgewählte Screen existiert nicht!")
-                input(r"Drücke Enter um das Startmenü zu benutzen. ")
+                input(r"Drücke Enter um das Startmenü zu benutzen. Bitte reporte diesen Bug im GitHub-Repo dieses Programms, indem du ein neues Issue öffnest, falls es noch nicht existiert!")
                 screen_to_show = "vis_start_menu"

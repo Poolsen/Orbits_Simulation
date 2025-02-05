@@ -10,7 +10,7 @@ def vis_draw_text(text, font_to_use, color, position, where_to_center):        #
 
     screen.blit(text_surf, text_rect)
 
-    rect_position = text_rect.topleft  # or text_rect.center if you prefer
+    rect_position = text_rect.topleft  # oder text_rect.center, wenn man lieber will
     rect_width = text_rect.width
     rect_height = text_rect.height
     rect_width_height = (rect_width, rect_height)
