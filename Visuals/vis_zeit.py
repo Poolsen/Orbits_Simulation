@@ -1,11 +1,12 @@
-from config import *
+import config
 from Visuals import vis_draw_text
+import datetime
 
 current_date = datetime.datetime(2025, 1, 1, 0, 0)
 
 def vis_ingame_time():
 
-    time_increment = datetime.timedelta(seconds = deltaTime)    #da hier deltaTime nur aus config gelesen werden muss, muss sie nicht davor mit global deklariert werden
+    time_increment = datetime.timedelta(seconds = config.deltaTime)    #da hier deltaTime nur aus config gelesen werden muss, muss sie nicht davor mit global deklariert werden
 
     global current_date
     current_date = current_date + time_increment
@@ -13,7 +14,7 @@ def vis_ingame_time():
 
     current_time_text = f"Zeit: {formatted_current_date} Uhr"
 
-    vis_draw_text(current_time_text, font_arial, (255, 255, 255), (5, 27),None)
+    vis_draw_text(current_time_text, config.font_arial, (255, 255, 255), (5, 27),None)
 
 
 
@@ -86,6 +87,6 @@ def vis_ingame_time(zeit_min, zeit_h, zeit_tag, monat, zeit_jahr):
 
     current_time_text = f"Zeit: {zeit_h} : {zeit_min} Uhr  {zeit_tag}. {monat}  {zeit_jahr}"
     return vis_draw_text(current_time_text, font_arial, (255, 255, 255), (5, 25), None), zeit_min, zeit_h, zeit_tag, monat, zeit_jahr
-""" #das war meine eigene Zeit library (: datetime ist besser):
+""" #das war meine eigene Zeit library (: datetime ist besser ):
 
 

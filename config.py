@@ -1,7 +1,5 @@
 # definition aller variablen
 import pygame
-import sys  #wird hier gebraucht, da auch in main.py gebraucht (→ unused - Anzeige ignorieren)
-import datetime     #wird für vis_zeit gebraucht
 
 pygame.init()
 

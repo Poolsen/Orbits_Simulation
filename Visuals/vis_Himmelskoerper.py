@@ -1,5 +1,7 @@
-from config import *
+#from config import *
 import config
+import sys
+import pygame
 from Satellites_Calculations import init_satelliten_physics
 from Visuals import vis_scroll_change_scale
 
@@ -7,15 +9,15 @@ class Visualisierung:
 
     def __init__(self, farbe, radius):
         #self.scale = 1 / 1e5        # 1 Pixel = 100.000 m = 100 km // jetzt bei class Visualisierung
-        self.farbe = farbe          #farbe des Koerpers beim Visualisieren
-        self.radius = radius        #radius beim Vis
-        #koerper.orbit = orbit         #punkte, die gezeichnet bzw. in draw_punkte übertragen werden
-        #koerper.x = x                 # wird aus class BewegenderHimmelskoerper übernommen
-        #koerper.y = y                 # wird aus class BH übernommen
+        self.farbe = farbe           #farbe des Koerpers beim Visualisieren
+        self.radius = radius         #radius beim Vis
+        #koerper.orbit = orbit       #punkte, die gezeichnet bzw. in draw_punkte übertragen werden
+        #koerper.x = x               # wird aus class BewegenderHimmelskoerper übernommen
+        #koerper.y = y               # wird aus class BH übernommen
 
     def draw(self, koerper, surface):
-        x = koerper.x * config.scale + breite / 2
-        y = koerper.y * config.scale + hoehe / 2
+        x = koerper.x * config.scale + config.breite / 2
+        y = koerper.y * config.scale + config.hoehe / 2
 
         if len(koerper.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
             while len(koerper.orbit) >= 900:
@@ -25,8 +27,8 @@ class Visualisierung:
 
             for point in koerper.orbit:
                 x, y = point
-                x = x * config.scale + breite / 2     # hier in pixeln
-                y = y * config.scale + hoehe / 2      # in pixeln
+                x = x * config.scale + config.breite / 2     # hier in pixeln
+                y = y * config.scale + config.hoehe / 2      # in pixeln
 
                 draw_punkte.append((x, y))
 
@@ -63,9 +65,9 @@ def init_satelliten():
 
     erde, s1 = init_satelliten_physics()
 
-    erde_vis = Visualisierung(hellblau, 30)
+    erde_vis = Visualisierung(config.hellblau, 30)
 
-    s1_vis = Visualisierung(weiss, 20)
+    s1_vis = Visualisierung(config.weiss, 20)
 
     return [(erde, erde_vis), (s1, s1_vis)]
 
@@ -81,7 +83,7 @@ def vis_draw_himmelskoeper(satelliten, buttons):
     for (koerper, koerper_vis) in satelliten:
         koerper.position_berechnen(satelliten)
 
-        koerper_vis.draw(koerper, screen)
+        koerper_vis.draw(koerper, config.screen)
 
     for button in buttons:
         if button.id == 1:      #button 1 ist der resume button, dieser darf nicht im animation screen gerendert werden

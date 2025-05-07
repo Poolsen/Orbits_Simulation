@@ -1,5 +1,5 @@
 import math as ma
-from config import *
+import config
 
 class Himmelskoerper:
 
@@ -66,11 +66,11 @@ class BewegenderHimmelskoerper(Himmelskoerper):
                 f_x_total += fx
                 f_y_total += fy
 
-        self.x_v = self.x_v + (f_x_total / self.masse) * deltaTime      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
-        self.y_v = self.y_v + (f_y_total / self.masse) * deltaTime
+        self.x_v = self.x_v + (f_x_total / self.masse) * config.deltaTime      # das Gleiche wie self.x_v += (f_x_total / self.masse) * self.TimeStep aber schöner
+        self.y_v = self.y_v + (f_y_total / self.masse) * config.deltaTime
 
-        self.x += self.x_v * deltaTime
-        self.y += self.y_v * deltaTime
+        self.x += self.x_v * config.deltaTime
+        self.y += self.y_v * config.deltaTime
 
         self.orbit.append((self.x, self.y))
 
