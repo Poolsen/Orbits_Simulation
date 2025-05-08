@@ -54,7 +54,7 @@ class Visualisierung:
 
                 pygame.draw.lines(surface, (255, 255, 255), False, draw_punkte[150:900],    2)
 
-            except ValueError:      # don't worry, be happy
+            except ValueError:      # don't worry, be happy, bomba lied btw
                pass                 # I think I like this "try" "except" thingy (:
 
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
