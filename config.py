@@ -33,9 +33,9 @@ hoehe = 800  # hoehe des windows
 
 pygame.display.set_caption("Orbits_Simulation")  # Titel des Windows
 
-
 deltaTime = 60          # 1 Minute pro Frame wird "berechnet"
 
+logarithmic_scroll: bool = True
 
 scale_divis = 1e5
 scale = 1 / scale_divis
