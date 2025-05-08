@@ -1,8 +1,7 @@
 import math as ma
 import config
 
-class Himmelskoerper:
-
+class MovingObject:
     G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
     #deltaTime = 60           # 1 Minute pro Frame wird "berechnet" in config
 
@@ -16,9 +15,6 @@ class Himmelskoerper:
         self.planet = False
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
-
-
-class BewegenderHimmelskoerper(Himmelskoerper):
 
     def anziehung(self, other):     #Static?        resolved: Nein
 
@@ -75,10 +71,10 @@ class BewegenderHimmelskoerper(Himmelskoerper):
         self.orbit.append((self.x, self.y))
 
 def init_satelliten_physics():
-    erde = BewegenderHimmelskoerper(0, 0,  5.972 * 10**24)
+    erde = MovingObject(0, 0,  5.972 * 10**24)
     erde.planet = True
 
-    s1 = BewegenderHimmelskoerper(-36000 * 1000, 0,  200)
+    s1 = MovingObject(-36000 * 1000, 0,  200)
     s1.y_v = 3.1 * 1000      #3.1 km/s --> 3100 m/s
 
     return erde, s1
