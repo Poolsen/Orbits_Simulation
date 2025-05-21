@@ -5,7 +5,7 @@ import config
 from Satellites_Calculations import MovingObject
 from Visuals import Visualisierung
 
-weiteres_Objekt: bool = True        #kp warum, aber wenn man :bool entfernt kommt fucking type error
+weiteres_Objekt: bool = True        #kp warum, aber wenn man :bool entfernt kommt fucking type error; dont worry be happy
 moving_objects: list = []
 
 # nur temporary: irgendwie schlau ändern // edit: temporary mein ass
