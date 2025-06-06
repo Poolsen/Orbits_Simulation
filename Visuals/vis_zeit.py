@@ -1,6 +1,7 @@
 import config
 from Visuals import vis_draw_text
 import datetime
+from launch import pygame_launcher
 
 current_date = datetime.datetime(2025, 1, 1, 0, 0)
 
@@ -14,7 +15,7 @@ def vis_ingame_time():
 
     current_time_text = f"Zeit: {formatted_current_date} Uhr"
 
-    vis_draw_text(current_time_text, config.font_arial, (255, 255, 255), (5, 27),None)
+    vis_draw_text(current_time_text, pygame_launcher.font_arial, (255, 255, 255), (5, 27),None)
 
 
 

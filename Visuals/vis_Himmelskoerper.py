@@ -2,8 +2,8 @@
 import config
 import sys
 import pygame
-from Satellites_Calculations import init_satelliten_physics
 from Visuals import vis_scroll_change_scale
+from launch import pygame_launcher
 
 class Visualisierung:
 
@@ -60,17 +60,6 @@ class Visualisierung:
         pygame.draw.circle(surface, self.farbe, (x, y), self.radius)
 
 
-
-def init_satelliten():
-
-    erde, s1 = init_satelliten_physics()
-
-    erde_vis = Visualisierung(config.hellblau, 30)
-
-    s1_vis = Visualisierung(config.weiss, 20)
-
-    return [(erde, erde_vis), (s1, s1_vis)]
-
 def vis_draw_himmelskoeper(satelliten, buttons):
     for event in pygame.event.get():  # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
         if event.type == pygame.QUIT:  # wenn auf das X gedrückt wird
@@ -83,7 +72,7 @@ def vis_draw_himmelskoeper(satelliten, buttons):
     for (koerper, koerper_vis) in satelliten:
         koerper.position_berechnen(satelliten)
 
-        koerper_vis.draw(koerper, config.screen)
+        koerper_vis.draw(koerper, pygame_launcher.screen)
 
     for button in buttons:
         if button.id == 1:      #button 1 ist der resume button, dieser darf nicht im animation screen gerendert werden

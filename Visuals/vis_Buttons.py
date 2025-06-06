@@ -1,7 +1,7 @@
 import config
 import pygame
 from Visuals import vis_draw_text, vis_show_current_fps
-
+from launch import pygame_launcher
 
 class Button:
     def __init__(self, text, pos, width, height, ident, font_to_use):
@@ -20,7 +20,7 @@ class Button:
         #self.text_rect = self.text_surf.get_rect(center = self.rect.center)
 
     def draw(self):
-        pygame.draw.rect(config.screen, self.color, self.rect, border_radius = 12)
+        pygame.draw.rect(pygame_launcher.screen, self.color, self.rect, border_radius = 12)
 
         #screen.blit(self.text_surf, self.text_rect) # alles in func vis_draw_text
 
@@ -47,8 +47,8 @@ class Button:
             return False        # wurde nicht gecklickt
 
 def init_buttons():
-    button0 = Button(text='| |', pos=(750, 750), width=45, height=45, ident=0, font_to_use=config.font_pause_button)       #pos ist hier die ecke oben links des objekts // pause button
-    button1 = Button(text='continue', pos=(700, 750), width=95, height=45, ident=1, font_to_use=config.font_arial)         #continue button
+    button0 = Button(text='| |', pos=(750, 750), width=45, height=45, ident=0, font_to_use=pygame_launcher.font_pause_button)       #pos ist hier die ecke oben links des objekts // pause button
+    button1 = Button(text='continue', pos=(700, 750), width=95, height=45, ident=1, font_to_use=pygame_launcher.font_arial)         #continue button
 
     buttons = [button0, button1, ]
 

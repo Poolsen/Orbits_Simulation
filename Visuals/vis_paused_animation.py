@@ -1,6 +1,5 @@
 import sys
 import pygame
-import config
 
 def vis_draw_paused_animation(buttons):
     for event in pygame.event.get():

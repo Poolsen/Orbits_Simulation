@@ -70,11 +70,3 @@ class MovingObject:
 
         self.orbit.append((self.x, self.y))
 
-def init_satelliten_physics():
-    erde = MovingObject(0, 0,  5.972 * 10**24)
-    erde.planet = True
-
-    s1 = MovingObject(-36000 * 1000, 0,  200)
-    s1.y_v = 3.1 * 1000      #3.1 km/s --> 3100 m/s
-
-    return erde, s1
