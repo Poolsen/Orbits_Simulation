@@ -3,7 +3,7 @@ import sys
 
 def main():
     from launch import create_moving_Objects
-    satelliten = create_moving_Objects.init_moving_objects()
+    satelliten = create_moving_Objects.init_simulation()
 
     from Visuals import init_buttons, draw_current_screen
     buttons, buttons_update_pos = init_buttons()

@@ -1,6 +1,19 @@
 #todo: Möglichkeit für importieren von vorgefertigten Szenarien importieren
 
 import config
+from launch import preset_handler
+
+def init_simulation():
+    return way_of_creation()
+
+
+def way_of_creation():
+    if input("Wie soll die Simulation geladen werden?\n"
+          "'p' -> Presets\n"
+          "'l' -> legacy - version\n").lower().strip() == "l":
+        return init_moving_objects()
+    else:
+        return preset_handler.read_preset_data()
 
 
 def init_moving_objects() -> list:
