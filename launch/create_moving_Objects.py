@@ -5,9 +5,7 @@ import config
 
 def init_moving_objects() -> list:
 
-    weiteres_objekt: bool = True        #kp warum, aber wenn man :bool statt : bool macht kommt fucking type error; dont worry be happy
     moving_objects: list = []
-    all_args = []
 
     # nur temporary: irgendwie schlau ändern // edit: temporary für immer
     first_input: str = input("Gib als erstes das Zentral - Objekt an, das du erstellen möchtest! Dies sollte das größte Objekt sein und erhält eine andere Farbe! Drücke Enter! ")
@@ -36,47 +34,59 @@ def init_moving_objects() -> list:
 
     # Möglichkeit für das Erstellen ganz neuer Objekte
     if do_else:
+        n = 1
+        weiteres_objekt = True
+        moving_objects: list = []
+        all_args: dict = {}
+
         while weiteres_objekt:
-            name = input("Name: ")
             mass = input("Masse [kg]: ")
             x = input("X-Koordinate [m]: ")
             y = input("Y-Koordinate [m]: ")
             y_v = input("Startgeschwindigkeit nach unten [m/s]: ")
-            x_v = input("Startgeschwindigkeit nach oben [m/s]: ")
+            x_v = input("Startgeschwindigkeit nach rechts [m/s]: ")
 
             try:
-                x, y = float(x), float(y)
-                name = str(name)
+                if x == "":
+                    x = 0
+                else:
+                    x = float(eval(x))
+
+                if y == "":
+                    y = 0
+                else:
+                    y = float(eval(y))
 
                 if y_v == "":
                     y_v = 0
                 else:
-                    y_v = float(y_v)
+                    y_v = float(eval(y_v))
 
                 if x_v == "":
                     x_v = 0
                 else:
-                    x_v = float(x_v)
+                    x_v = float(eval(x_v))
+
+                if mass == "":
+                    mass = 0
+                else:
+                    mass = float(eval(mass))
 
             except ValueError as e:
-                print(f"Du muss eine Zahl mit *Punkt* als Komma eingeben! Sie darf keine Rechenoperation (/ ; *; ^) enthalten! Fehlercode: {e}")
-                continue
-            except Exception as e:
-                print(f"Es gab einen unerwarteten, kritischen Fehler! Fehlercode {e}")
+                print(
+                    f"Du muss eine Zahl mit *Punkt* als Komma eingeben!"
+                    f"Sie darf  Rechenoperation (/ ; *; **) enthalten! Fehlercode: {e}")
                 continue
 
-            try:
-                mass = float(mass)
-
-            except ValueError as e:
-                print(f"Du muss eine Zahl mit Punkt als Komma eingeben! Sie darf keine Rechenoperation enthalten! Fehlercode: {e}")
-                continue
             except Exception as e:
+                print(
+                    "Du muss eine Zahl mit *Punkt* als Komma eingeben! "
+                    "Sie darf  Rechenoperation (/ ; *; **) enthalten!")
+
                 print(f"Es gab einen unerwarteten, kritischen Fehler! Fehlercode {e}")
                 continue
 
             args_one_object = {
-                "name": name,
                 "x": x,
                 "y": y,
                 "mass": mass,
@@ -85,33 +95,40 @@ def init_moving_objects() -> list:
                 "id": len(all_args)
             }
 
-            all_args.append(args_one_object)
+            all_args[f"object no.: {n}"] = args_one_object
+            n += 1
 
+            match input("Weiteres Objekt hinzufügen?\n"
+                        "Ja (' ') \n"
+                        "Nein ('n')\n"
+                        ""):
+                case "n" | "N" | "m" | "M":
+                    weiteres_objekt = False
 
-            if input("Drücke Enter für ein weiteres Objekt! ") == "":
-                weiteres_objekt = True
+                case _:
+                    pass
+
+        from Satellites_Calculations import MovingObject
+        from Visuals import Visualisierung
+
+        for n in range(len(all_args)):
+            new_moving_object = MovingObject(all_args[f"object no.: {n}"].get("x"),
+                                             all_args[f"object no.: {n}"].get("y"),
+                                             all_args[f"object no.: {n}"].get("mass"))
+
+            new_moving_object.x_v = all_args[f"object no.: {n}"].get("x_v")
+            new_moving_object.y_v = all_args[f"object no.: {n}"].get("y_v")
+
+            if all_args[f"object no.: {n+1}"]["id"] == 0:  # Zentral-Teil
+
+                new_visual_object = Visualisierung(config.hellblau, 30)
+
             else:
-                weiteres_objekt = False
+                new_visual_object = Visualisierung(config.weiss, 20)
 
-    from Satellites_Calculations import MovingObject
-    from Visuals import Visualisierung
-
-    for n in range(len(all_args)):
-        new_moving_object = MovingObject(all_args[n].get("x"), all_args[n].get("y"), all_args[n].get("mass"))
-        new_moving_object.x_v = all_args[n].get("x_v")
-        new_moving_object.y_v = all_args[n].get("y_v")
-
-        if n == 0:  # Zentral-Teil
-            new_visual_object = Visualisierung(config.hellblau, 30)
-
-        else:
-            new_visual_object = Visualisierung(config.weiss, 20)
-
-        moving_objects.append((new_moving_object, new_visual_object))  # klammer wichtig, um als tuple zu passen
+            moving_objects.append((new_moving_object, new_visual_object))  # klammer wichtig, um als tuple zu passen
 
     return moving_objects
-
-
 
 
 #Debugging - funktioniert: Es wird jedes Mal ein neues Objekt erstellt mit eigenen Attributen und Memory - Allocations
