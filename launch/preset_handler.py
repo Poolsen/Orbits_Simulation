@@ -6,7 +6,7 @@ import config
 
 def create_preset_data_json():
     try:
-        with open("data/preset_data.json", "w") as file:
+        with open(config.PRESET_FILE, "w") as file:
             json_object: dict = {
                 "Comment": "This file saves all presets. Please do not touch (;",
                 "number_of_presets": 0,
@@ -21,18 +21,14 @@ def create_preset_data_json():
     except Exception as e:
         raise Exception(f"Es passierte der folgende kritische Fehler: {e}")
 
-
-
-
-
 def add_preset_data():
-    if os.path.exists("data/preset_data.json"):
+    if os.path.exists(config.PRESET_FILE):
         pass
     else:
-        print(config.Colors.WARNING + "WARNING: THE FILE YOU TRIED TO ACCESS DOES NOT EXIST. A NEW FILE HAS BEEN CREATED" + config.Colors.ENDC)
         create_preset_data_json()
+        print(config.Colors.WARNING + "WARNING: THE FILE YOU TRIED TO ACCESS DOES NOT EXIST. A NEW FILE HAS BEEN CREATED" + config.Colors.ENDC)
 
-    with (open("data/preset_data.json", "r+") as file):
+    with (open(config.PRESET_FILE, "r+") as file):
         json_object = json.load(file)
 
         all_args: dict = {}
@@ -133,7 +129,7 @@ def add_preset_data():
                               indent=6)
                     file.flush()
 
-                    json_object["size ()"] = f"{os.path.getsize('data/preset_data.json')} Bytes"
+                    json_object["size ()"] = f"{os.path.getsize(config.PRESET_FILE)} Bytes"
 
                     file.seek(0, 0)
                     file.truncate()
@@ -158,7 +154,7 @@ def add_preset_data():
                               indent=6)
                     file.flush()
 
-                    json_object["size ()"] = f"{os.path.getsize('data/preset_data.json')} Bytes"
+                    json_object["size ()"] = f"{os.path.getsize(config.PRESET_FILE)} Bytes"
 
                     file.seek(0, 0)
                     file.truncate()
@@ -192,7 +188,7 @@ def add_preset_data():
                               indent=6)
                     file.flush()
 
-                    json_object["size ()"] = f"{os.path.getsize('data/preset_data.json')} Bytes"
+                    json_object["size ()"] = f"{os.path.getsize(config.PRESET_FILE)} Bytes"
 
                     file.seek(0, 0)
                     file.truncate()
@@ -208,14 +204,14 @@ def add_preset_data():
 
 
 def read_preset_data():
-    if not os.path.exists("data/preset_data.json"):
+    if not os.path.exists(config.PRESET_FILE):
         print(config.Colors.ERROR + "ERROR: THE FILE YOU TRIED TO ACCESS DOES NOT EXIST!" + config.Colors.ENDC)
         if input(config.Colors.ERROR + "DO YOU WANT TO CREATE THE FILE? (y/n) \n" + config.Colors.ENDC).strip() == "y":
             create_preset_data_json()
         else:
             return None
 
-    with open("data/preset_data.json", "r") as file:
+    with open(config.PRESET_FILE) as file:
         data = json.load(file)
         all_presets_list: list = list(data["Presets"].keys())
 
@@ -313,7 +309,7 @@ def object_creation(data, chosen):
 
 
 def delete_preset_data():
-    if os.path.exists("../data/preset_data.json"):
-        os.remove("../data/preset_data.json")
+    if os.path.exists(config.PRESET_FILE):
+        os.remove(config.PRESET_FILE)
     else:
         print("The file does not exist")

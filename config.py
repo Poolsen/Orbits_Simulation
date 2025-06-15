@@ -25,7 +25,10 @@ scale = 1 / scale_divis
 
 # laut dem tollen typen auf Stack Overflow kann man so farbigen output auch auf alten windows-kerneln erzeugen (:
 
+orbit_points_max_length = 10**100
+
 import os
+PRESET_FILE = os.path.join("data", "preset_data.json")
 
 if os.name == 'nt':
     import ctypes

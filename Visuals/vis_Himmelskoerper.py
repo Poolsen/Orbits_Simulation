@@ -20,7 +20,7 @@ class Visualisierung:
         y = koerper.y * config.scale + config.hoehe / 2
 
         if len(koerper.orbit) >= 2:    #muss, da sonst fehler bei pygame.draw: müssen zum drawn mind. 2 punkte vorhanden sein
-            while len(koerper.orbit) >= 900:
+            while len(koerper.orbit) >= config.orbit_points_max_length:
                 del koerper.orbit[0]
 
             draw_punkte = []
@@ -52,7 +52,7 @@ class Visualisierung:
                 for n in range(150):
                     pygame.draw.lines(surface, (int(n * 1.7), int(n * 1.7), int(n * 1.7)), False, draw_punkte[n:(n + 2)], 2)
 
-                pygame.draw.lines(surface, (255, 255, 255), False, draw_punkte[150:900],    2)
+                pygame.draw.lines(surface, (255, 255, 255), False, draw_punkte[150:config.orbit_points_max_length],    2)
 
             except ValueError:      # don't worry, be happy, bomba lied btw
                pass                 # I think I like this "try" "except" thingy (:
@@ -61,6 +61,21 @@ class Visualisierung:
 
 
 def vis_draw_himmelskoeper(satelliten, buttons):
+    event_handler()
+
+    for (koerper, koerper_vis) in satelliten:
+        koerper.position_berechnen(satelliten)
+
+        koerper_vis.draw(koerper, pygame_launcher.screen)
+
+    screen_from_buttons = vis_draw_buttons(buttons)
+    if screen_from_buttons is not None:
+        return screen_from_buttons
+
+    return "vis_Himmelskoerper"
+
+
+def event_handler():
     for event in pygame.event.get():  # alles, was in pygame und dem window passiert, mich interessiert nur, ob auf das X gedrückt wird, um zu schließen
         if event.type == pygame.QUIT:  # wenn auf das X gedrückt wird
             # run = False  # soll das Programm nicht mehr laufen, da run = false wird, wird der while loop nicht mehr ausgeführt
@@ -69,11 +84,8 @@ def vis_draw_himmelskoeper(satelliten, buttons):
         elif event.type == pygame.MOUSEWHEEL:
             vis_scroll_change_scale(event.y)
 
-    for (koerper, koerper_vis) in satelliten:
-        koerper.position_berechnen(satelliten)
 
-        koerper_vis.draw(koerper, pygame_launcher.screen)
-
+def vis_draw_buttons(buttons):
     for button in buttons:
         if button.id == 1:      #button 1 ist der resume button, dieser darf nicht im animation screen gerendert werden
             continue
@@ -83,5 +95,3 @@ def vis_draw_himmelskoeper(satelliten, buttons):
             screen_to_show = "vis_paused_animation" #wird geändert, wenn gedrückt wurde
             return screen_to_show   #sollte der pause button gedrückt worden sein, dann kann der loop unterbrochen werden, es kann schließlich nur ein button gedrückt worden sein
 
-    screen_to_show = "vis_Himmelskoerper"
-    return screen_to_show
