@@ -1,5 +1,3 @@
-#todo: Möglichkeit für importieren von vorgefertigten Szenarien importieren
-
 import config
 from launch import preset_handler
 
