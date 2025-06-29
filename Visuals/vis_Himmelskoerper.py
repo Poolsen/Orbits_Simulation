@@ -2,6 +2,8 @@
 import config
 import sys
 import pygame
+
+from Satellites_Calculations import MovingObject
 from Visuals import vis_scroll_change_scale
 from launch import pygame_launcher
 
@@ -63,9 +65,8 @@ class Visualisierung:
 def vis_draw_himmelskoeper(satelliten, buttons):
     event_handler()
 
+    MovingObject.position_berechnen(satelliten)
     for (koerper, koerper_vis) in satelliten:
-        koerper.position_berechnen(satelliten)
-
         koerper_vis.draw(koerper, pygame_launcher.screen)
 
     screen_from_buttons = vis_draw_buttons(buttons)

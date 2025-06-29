@@ -1,5 +1,9 @@
 import math as ma
+from ctypes import c_double, byref
+
 import config
+from Satellites_Calculations import gravitation_interface
+
 
 class MovingObject:
     G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
@@ -18,7 +22,7 @@ class MovingObject:
 
     def anziehung(self, other):     #Static?        resolved: Nein
 
-        other_x = other.x
+        """other_x = other.x
         other_y = other.y
 
         distance_x = other_x - self.x
@@ -46,12 +50,13 @@ class MovingObject:
 
             fx = ma.cos(alpha) * f_generell
             #print(alpha * 180 / ma.pi) #debugging fertig
-        return fx, fy
+        return fx, fy"""
 
-    def position_berechnen(self, satelliten):
-        f_x_total = f_y_total = 0
+    @staticmethod
+    def position_berechnen(satelliten):
+        """f_x_total = f_y_total = 0
 
-        for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an Stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen
+        for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an Stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen (danach ist der Visual-Körper)
             satellit = tupel[0]
 
             #if self.planet is True:     # WARUM?
@@ -66,7 +71,43 @@ class MovingObject:
         self.y_v = self.y_v + (f_y_total / self.masse) * config.deltaTime
 
         self.x += self.x_v * config.deltaTime
-        self.y += self.y_v * config.deltaTime
+        self.y += self.y_v * config.deltaTime"""
 
-        self.orbit.append((self.x, self.y))
+        # Shared Library
+        gravitation_interface.lib.init_objects(len(satelliten), config.deltaTime)
 
+        for tupel in satelliten:
+            moving_object = tupel[0]
+            gravitation_interface.lib.import_objects(
+                moving_object.x,
+                moving_object.y,
+                moving_object.x_v,
+                moving_object.y_v,
+                moving_object.masse,
+                moving_object.planet
+            )
+
+        gravitation_interface.lib.position_calculator(config.deltaTime)
+
+        for n in range(len(satelliten)):
+            moving_object = satelliten[n][0]
+
+            x = c_double()
+            y = c_double()
+            x_v = c_double()
+            y_v = c_double()
+
+            gravitation_interface.lib.export_objects(
+                n,
+                byref(x),
+                byref(y),
+                byref(x_v),
+                byref(y_v),
+            )
+
+            moving_object.x = x.value
+            moving_object.y = y.value
+            moving_object.x_v = x_v.value
+            moving_object.y_v = y_v.value
+
+            moving_object.orbit.append((moving_object.x, moving_object.y))

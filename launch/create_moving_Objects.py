@@ -125,12 +125,12 @@ def init_moving_objects() -> list:
         from Visuals import Visualisierung
 
         for n in range(len(all_args)):
-            new_moving_object = MovingObject(all_args[f"object no.: {n}"].get("x"),
-                                             all_args[f"object no.: {n}"].get("y"),
-                                             all_args[f"object no.: {n}"].get("mass"))
+            new_moving_object = MovingObject(all_args[f"object no.: {n+1}"].get("x"),
+                                             all_args[f"object no.: {n+1}"].get("y"),
+                                             all_args[f"object no.: {n+1}"].get("mass"))
 
-            new_moving_object.x_v = all_args[f"object no.: {n}"].get("x_v")
-            new_moving_object.y_v = all_args[f"object no.: {n}"].get("y_v")
+            new_moving_object.x_v = all_args[f"object no.: {n+1}"].get("x_v")
+            new_moving_object.y_v = all_args[f"object no.: {n+1}"].get("y_v")
 
             if all_args[f"object no.: {n+1}"]["id"] == 0:  # Zentral-Teil
 
