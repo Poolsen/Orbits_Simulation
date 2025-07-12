@@ -2,19 +2,24 @@ import config
 from launch import preset_handler
 
 def init_simulation():
-    return way_of_creation()
+    return create(way_of_creation())
 
 
 def way_of_creation():
-    if input("Wie soll die Simulation geladen werden?\n"
-          "'p' -> Presets\n"
-          "'l' -> legacy - version\n").lower().strip() == "l":
-        return init_moving_objects()
+    return input("Wie soll die Simulation geladen werden?\n"
+            "'p' -> Presets\n"
+            "'l' -> legacy - version\n").lower().strip()
+
+def create(way) -> list:
+    while (type(way) == str) is False:
+        way = way_of_creation()
+
+    if way == "l":
+        return init_moving_objects_legacy()
     else:
         return preset_handler.read_preset_data()
 
-
-def init_moving_objects() -> list:
+def init_moving_objects_legacy() -> list:
 
     moving_objects: list = []
 
@@ -42,6 +47,9 @@ def init_moving_objects() -> list:
                 moving_objects.append((s1, s1_vis))
 
                 do_else = False
+
+            case _:
+                pass
 
     # Möglichkeit für das Erstellen ganz neuer Objekte
     if do_else:

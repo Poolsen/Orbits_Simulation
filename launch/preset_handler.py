@@ -6,6 +6,7 @@ import config
 
 def create_preset_data_json():
     try:
+        os.makedirs(os.path.dirname(config.PRESET_FILE), exist_ok=True)
         with open(config.PRESET_FILE, "w") as file:
             json_object: dict = {
                 "Comment": "This file saves all presets. Please do not touch (;",
@@ -203,7 +204,7 @@ def add_preset_data():
         del json_object
 
 
-def read_preset_data():
+def read_preset_data(): #returnt list mit objekten wenn alles gut
     if not os.path.exists(config.PRESET_FILE):
         print(config.Colors.ERROR + "ERROR: THE FILE YOU TRIED TO ACCESS DOES NOT EXIST!" + config.Colors.ENDC)
         if input(config.Colors.ERROR + "DO YOU WANT TO CREATE THE FILE? (y/n) \n" + config.Colors.ENDC).strip() == "y":

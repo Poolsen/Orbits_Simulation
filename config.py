@@ -1,7 +1,12 @@
-# definition aller variablen
-#constants
+# definition aller variablen/Konstanten
 
-FPS = 60    #maximale FPS, kann auch weniger sein, falls nicht genug computing resources
+# jede Sekunde Simulationszeit wird eine richtige Stunde Zeit simuliert. (TIME_PER_SECOND)
+# die Target FPS, also angezeigte Frames per second sind 60 FPS
+FPS = 60    #maximale FPS, kann auch weniger sein, falls nicht genug computing resources / HIER IST FPS WIE VIELE SCHLEIFEN PRO SEKUNDE, NICHT BILDER
+deltaTime = 0.1               # bei jedem Durchlauf werden 6 Sekunden weiterberechnet
+TIME_PER_SIM_SECOND = 60 * 60   # in jeder Sekunde Simulation wird 1 Stunde echte Zeit simuliert
+sim_seconds_per_frame = TIME_PER_SIM_SECOND / FPS  # 3600 / 60 = 60
+ITERATIONS_PER_FRAME = max(int(round(sim_seconds_per_frame / deltaTime)), 1)  # 60 / 6 = 10
 
 #screen to show
 #screen_to_show = "vis_Himmelskoerper"    #default
@@ -16,8 +21,6 @@ breite = 800
 hoehe = 800
 
 
-deltaTime = 60          # 1 Minute pro Frame wird "berechnet"
-
 logarithmic_scroll: bool = True
 
 scale_divis = 1e5
@@ -28,17 +31,8 @@ scale = 1 / scale_divis
 orbit_points_max_length = 900
 
 import os
-PRESET_FILE = os.path.join("data", "preset_data.json")
-
-if os.name == 'nt':
-    import ctypes
-    kernel32 = ctypes.windll.kernel32
-    handle = kernel32.GetStdHandle(-11)  # STD_OUTPUT_HANDLE
-    mode = ctypes.c_uint32()
-    kernel32.GetConsoleMode(handle, ctypes.byref(mode))
-    mode.value |= 0x0004  # ENABLE_VIRTUAL_TERMINAL_PROCESSING
-    kernel32.SetConsoleMode(handle, mode)
-
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))   #gibt den Pfad zum dir von config.py an, also dem Hauptverzeichnis -> dynamische Erstellung
+PRESET_FILE = os.path.join(PROJECT_ROOT, "data", "preset_data.json")
 
 class Colors:
     HEADER     = "\033[95m"

@@ -1,13 +1,13 @@
-import math as ma
 from ctypes import c_double, byref
 
 import config
 from Satellites_Calculations import gravitation_interface
-
+from datetime import datetime
 
 class MovingObject:
     G = 6.67428e-11          #Gravitationskonstante  ((N * m ** 2) / kg **2)
     #deltaTime = 60           # 1 Minute pro Frame wird "berechnet" in config
+    seconds_per_orbit_point = 60 # jede 60 Sekunden simulationszeit wird ein neuer Punkt in self.orbit hinzugefügt, 60 sekunden ist aus Tests ein guter Kompromiss zwischen leistung und auflösung
 
     def __init__(self, x, y, masse):
         self.x = x
@@ -16,6 +16,7 @@ class MovingObject:
         self.masse = masse      # in kg
         # self.farbe = farbe // jetzt bei class Visualisierung
         self.orbit = []
+        self.last_orbit_save = datetime(2025, 1, 1, 0, 0)
         self.planet = False
         self.x_v = 0    #geschwindigkeit (in x - Richtung)
         self.y_v = 0    #geschwindigkeit (in y - Richtung)
@@ -53,7 +54,7 @@ class MovingObject:
         return fx, fy"""
 
     @staticmethod
-    def position_berechnen(satelliten):
+    def position_berechnen(satelliten, sim_time):
         """f_x_total = f_y_total = 0
 
         for tupel in satelliten:    # satellit (bzw. "koerper") muss erst aus tupel an Stelle 0 extrahiert werden, sonst versuch tupel mit attribut aufzurufen (danach ist der Visual-Körper)
@@ -110,4 +111,6 @@ class MovingObject:
             moving_object.x_v = x_v.value
             moving_object.y_v = y_v.value
 
-            moving_object.orbit.append((moving_object.x, moving_object.y))
+            if (sim_time - moving_object.last_orbit_save).total_seconds() >= MovingObject.seconds_per_orbit_point:      # nur wenn genug Zeit vergangen ist, wird der punkt hinzugefügt
+                moving_object.orbit.append((moving_object.x, moving_object.y))
+                moving_object.last_orbit_save = sim_time

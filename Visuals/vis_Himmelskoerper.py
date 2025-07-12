@@ -4,7 +4,7 @@ import sys
 import pygame
 
 from Satellites_Calculations import MovingObject
-from Visuals import vis_scroll_change_scale
+from Visuals import vis_scroll_change_scale, vis_zeit
 from launch import pygame_launcher
 
 class Visualisierung:
@@ -65,7 +65,9 @@ class Visualisierung:
 def vis_draw_himmelskoeper(satelliten, buttons):
     event_handler()
 
-    MovingObject.position_berechnen(satelliten)
+    for _ in range(config.ITERATIONS_PER_FRAME):
+        MovingObject.position_berechnen(satelliten, vis_zeit.current_date)
+
     for (koerper, koerper_vis) in satelliten:
         koerper_vis.draw(koerper, pygame_launcher.screen)
 
