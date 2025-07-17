@@ -91,35 +91,60 @@ def init_moving_objects_legacy() -> list:
                 erde = MovingObject(-149.6e9, 0, 5.972 * 10 ** 24)
                 erde.planet = False
                 erde.y_v = 29.78 * 1000
-                erde_vis = Visualisierung(config.hellblau, 18)
+                erde_vis = Visualisierung(config.hellblau, 5)
                 moving_objects.append((erde, erde_vis))
 
                 geo = MovingObject(erde.x + -42164 * 1000, 0, 1000)  # geo höhe
                 geo.y_v = erde.y_v + 3.0746 * 1000  # 3.1 km/s --> 3100 m/s
-                geo_vis = Visualisierung(config.weiss, 8)
+                geo_vis = Visualisierung(config.weiss, 2)
                 moving_objects.append((geo, geo_vis))
 
                 leo = MovingObject(erde.x + -7378 * 1000, 0, 1000)  # 1km höhe
                 leo.y_v = erde.y_v +  7.345 * 1000
-                leo_vis = Visualisierung(config.weiss, 8)
+                leo_vis = Visualisierung(config.weiss, 2)
                 moving_objects.append((leo, leo_vis))
 
                 meo = MovingObject(erde.x + -26378 * 1000, 0, 1000)  # 20,000 km höhe
                 meo.y_v = erde.y_v +  3.888 * 1000
-                meo_vis = Visualisierung(config.weiss, 8)
+                meo_vis = Visualisierung(config.weiss, 2)
                 moving_objects.append((meo, meo_vis))
 
                 molniya = MovingObject(erde.x + -6971 * 1000, 0, 1000)  # startet unter der erde
                 molniya.y_v = erde.y_v +  9.966 * 1000
-                molniya_vis = Visualisierung(config.weiss, 8)
+                molniya_vis = Visualisierung(config.weiss, 2)
                 moving_objects.append((molniya, molniya_vis))
 
-                config.scale_divis = 1e8
+                config.scale_divis = 5e8
                 config.deltaTime *= 60
                 config.TIME_PER_SIM_SECOND *= 60
 
                 do_else = False
 
+            case "lagrange":
+                from Satellites_Calculations import MovingObject
+                from Visuals import Visualisierung
+
+                sonne = MovingObject(0, 0, 1.989 * 10 ** 30)
+                sonne.planet = True
+                sonne_vis = Visualisierung(config.gelb, 20)
+                moving_objects.append((sonne, sonne_vis))
+
+                erde = MovingObject(-149.6e9, 0, 5.972 * 10 ** 24)
+                erde.planet = False
+                erde.y_v = 29.78 * 1000
+                erde_vis = Visualisierung(config.hellblau, 5)
+                moving_objects.append((erde, erde_vis))
+
+                l1 = MovingObject(erde.x + 1.5e6 * 1000, 0, 100)
+                l1.y_v = erde.y_v
+                l1_vis = Visualisierung(config.weiss, 3)
+                moving_objects.append((l1, l1_vis))
+
+                config.scale_divis = 5e8
+                config.deltaTime *= 60
+                config.TIME_PER_SIM_SECOND *= 60
+
+                do_else = False
 
             case _:
                 pass
