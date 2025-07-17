@@ -37,16 +37,89 @@ def init_moving_objects_legacy() -> list:
                 from Visuals import Visualisierung
                 erde = MovingObject(0, 0, 5.972 * 10 ** 24)
                 erde.planet = True
-                erde_vis = Visualisierung(config.hellblau, 30)
+                erde_vis = Visualisierung(config.hellblau, 20)
 
-                s1 = MovingObject(-36000 * 1000, 0, 1000)
+                s1 = MovingObject(-42164 * 1000, 0, 1000)
                 s1.y_v = 3.1 * 1000  # 3.1 km/s --> 3100 m/s
-                s1_vis = Visualisierung(config.weiss, 20)
+                s1_vis = Visualisierung(config.weiss, 8)
 
                 moving_objects.append((erde, erde_vis))
                 moving_objects.append((s1, s1_vis))
 
                 do_else = False
+
+            case "gfs":
+                from Satellites_Calculations import MovingObject
+                from Visuals import Visualisierung
+
+                erde = MovingObject(0, 0, 5.972 * 10 ** 24)
+                erde.planet = True
+                erde_vis = Visualisierung(config.hellblau, 20)
+                moving_objects.append((erde, erde_vis))
+
+                geo = MovingObject(-42164 * 1000, 0, 1000)  #geo höhe
+                geo.y_v = 3.0746 * 1000  # 3.1 km/s --> 3100 m/s
+                geo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((geo, geo_vis))
+
+                leo = MovingObject(-7378 * 1000, 0, 1000)   #1km höhe
+                leo.y_v = 7.345 * 1000
+                leo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((leo, leo_vis))
+
+                meo = MovingObject(-26378 * 1000, 0, 1000) #20,000 km höhe
+                meo.y_v = 3.888 * 1000
+                meo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((meo, meo_vis))
+
+                molniya = MovingObject(-6971 * 1000, 0, 1000) #startet unter der erde
+                molniya.y_v = 9.966 * 1000  #startet nach rechts
+                molniya_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((molniya, molniya_vis))
+
+                do_else = False
+
+            case "gfs_helio":
+                from Satellites_Calculations import MovingObject
+                from Visuals import Visualisierung
+
+                sonne = MovingObject(0, 0, 1.989 * 10 ** 30)
+                sonne.planet = True
+                sonne_vis = Visualisierung(config.gelb, 20)
+                moving_objects.append((sonne, sonne_vis))
+
+                erde = MovingObject(-149.6e9, 0, 5.972 * 10 ** 24)
+                erde.planet = False
+                erde.y_v = 29.78 * 1000
+                erde_vis = Visualisierung(config.hellblau, 18)
+                moving_objects.append((erde, erde_vis))
+
+                geo = MovingObject(erde.x + -42164 * 1000, 0, 1000)  # geo höhe
+                geo.y_v = erde.y_v + 3.0746 * 1000  # 3.1 km/s --> 3100 m/s
+                geo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((geo, geo_vis))
+
+                leo = MovingObject(erde.x + -7378 * 1000, 0, 1000)  # 1km höhe
+                leo.y_v = erde.y_v +  7.345 * 1000
+                leo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((leo, leo_vis))
+
+                meo = MovingObject(erde.x + -26378 * 1000, 0, 1000)  # 20,000 km höhe
+                meo.y_v = erde.y_v +  3.888 * 1000
+                meo_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((meo, meo_vis))
+
+                molniya = MovingObject(erde.x + -6971 * 1000, 0, 1000)  # startet unter der erde
+                molniya.y_v = erde.y_v +  9.966 * 1000
+                molniya_vis = Visualisierung(config.weiss, 8)
+                moving_objects.append((molniya, molniya_vis))
+
+                config.scale_divis = 1e8
+                config.deltaTime *= 60
+                config.TIME_PER_SIM_SECOND *= 60
+
+                do_else = False
+
 
             case _:
                 pass

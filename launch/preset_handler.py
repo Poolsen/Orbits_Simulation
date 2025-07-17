@@ -3,6 +3,7 @@ import sys
 import json
 import config
 
+#todo: Änderung auf GUI ohne Benutzung der Commandzeile!
 
 def create_preset_data_json():
     try:
@@ -279,34 +280,13 @@ def object_creation(data, chosen):
         new_moving_object.y_v = preset[f"object no.: {n+1}"].get("y_v")
 
         if preset[f"object no.: {n + 1}"]["id"] == 0:  # Zentral-Teil
-            new_visual_object = Visualisierung(config.hellblau, 30)
+            new_visual_object = Visualisierung(config.hellblau, 20)
 
         else:
-            new_visual_object = Visualisierung(config.weiss, 20)
+            new_visual_object = Visualisierung(config.weiss, 8)
 
         moving_objects.append((new_moving_object, new_visual_object))  # klammer wichtig, um als tuple zu passen
         return moving_objects
-
-
-
-""" Alte Methode zum Akzeptieren von ints UND strings als Input für die Auswahl 
-        try:
-            select = int(select)
-        except ValueError:
-            pass
-
-        if type(select) == int:
-            input(f"Soll Preset '{preset_matcher_int[str(select)]}' geladen werden? (y/n)\n")
-
-        elif type(select) == str:
-            if select in preset_matcher_string:
-                select_int_position: int = preset_matcher_string.index(f"{select}") + 1
-                input(f"Soll Preset '{preset_matcher_int[str(select_int_position)]}' geladen werden? (y/n)\n")
-
-        print(preset_matcher_int)
-        print(preset_matcher_string)
-        del preset_matcher_int, preset_matcher_string
-"""
 
 
 def delete_preset_data():
